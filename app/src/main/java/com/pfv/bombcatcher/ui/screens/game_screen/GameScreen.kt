@@ -1,6 +1,5 @@
 package com.pfv.bombcatcher.ui.screens.game_screen
 
-import android.widget.Toast
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
@@ -42,6 +41,9 @@ fun GameScreen(
 
     val viewModel = ViewModelProvider(vmContext)[GameScreenViewModel::class.java]
 
+    var score by rememberSaveable { mutableStateOf(0) }
+    var isGameOver by remember { mutableStateOf(false) }
+
     val vector = ImageVector.vectorResource(id = R.drawable.ic_bomb)
     val painter = rememberVectorPainter(image = vector)
     val screenSize = context.getScreenSize(
@@ -54,12 +56,13 @@ fun GameScreen(
 
     LaunchedEffect(yPos) {
 
-        if (yPos >= screenSize.height - 90) {
-            yPos = -90
-            xPos = Random.nextInt(0, screenSize.width - 90)
-        } else {
+        if (yPos < screenSize.height - 90) {
             yPos += 10
+
+        }else{
+            isGameOver = true
         }
+
         delay(10)
     }
 
@@ -71,7 +74,7 @@ fun GameScreen(
 
         ScoreElement(
             modifier = Modifier.align(alignment = Alignment.TopCenter),
-            score = "${xPos} - ${yPos}"
+            score = score.toString()
         )
 
         Image(
@@ -80,37 +83,50 @@ fun GameScreen(
             contentDescription = "img"
         )
 
-        Canvas(
-            modifier = Modifier
-                .fillMaxSize()
-                .pointerInput(Unit) {
-                    detectTapGestures(
-                        onTap = { tapOffset ->
-                            Toast
-                                .makeText(
-                                    context, checkIsBombCatch(
+        if (!isGameOver){
+            Canvas(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .pointerInput(Unit) {
+                        detectTapGestures(
+                            onTap = { tapOffset ->
+
+                                if (checkIsBombCatch(
                                         clickXPos = tapOffset.x.toInt(),
                                         clickYPos = tapOffset.y.toInt(),
                                         bombXPos = xPos,
                                         bombYPos = yPos,
                                         imgWidth = vector.defaultWidth.roundToPx(),
                                         imgHeight = vector.defaultHeight.roundToPx()
-                                    ).toString(), Toast.LENGTH_SHORT
-                                )
-                                .show()
-                        }
-                    )
-                },
-            contentDescription = "game_field",
-        ) {
+                                    )
+                                ) {
+                                    score++
+                                    yPos = -90
+                                    xPos = Random.nextInt(0, screenSize.width - 90)
+                                }
 
-            translate(left = xPos.toFloat(), top = yPos.toFloat()) {
-                with(painter) {
-                    draw(
-                        painter.intrinsicSize
-                    )
+                            }
+                        )
+                    },
+                contentDescription = "game_field",
+            ) {
+
+                translate(left = xPos.toFloat(), top = yPos.toFloat()) {
+                    with(painter) {
+                        draw(
+                            painter.intrinsicSize
+                        )
+                    }
                 }
             }
+        }
+
+        if (isGameOver){
+            Image(
+                modifier = Modifier.align(alignment = Alignment.BottomCenter),
+                painter = painterResource(id = R.drawable.ic_boom),
+                contentDescription = "boom"
+            )
         }
     }
 }
