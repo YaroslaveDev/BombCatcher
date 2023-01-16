@@ -1,4 +1,8 @@
 package com.pfv.bombcatcher.ui.screens.game_screen
 
-class GameScreenViewModel {
+import androidx.lifecycle.ViewModel
+
+class GameScreenViewModel: ViewModel() {
+
+
 }

@@ -1,5 +1,6 @@
 package com.pfv.bombcatcher.ui.screens.home_screen
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -8,6 +9,7 @@ import androidx.navigation.NavController
 import com.pfv.bombcatcher.ui.screens.home_screen.components.HomeScreenActionBlock
 import com.pfv.bombcatcher.ui.screens.home_screen.components.HomeScreenBackImage
 import com.pfv.bombcatcher.ui.screens.home_screen.components.HomeScreenLogo
+import com.pfv.bombcatcher.ui.theme.BaseGreenLight
 
 @Composable
 fun HomeScreen(
@@ -17,6 +19,7 @@ fun HomeScreen(
     Box(
         modifier = Modifier
             .fillMaxSize()
+            .background(color = BaseGreenLight)
     ){
 
         Box(
@@ -37,7 +40,9 @@ fun HomeScreen(
             modifier = Modifier.fillMaxSize(),
             contentAlignment = Alignment.Center
         ){
-            HomeScreenActionBlock()
+            HomeScreenActionBlock(
+                navController = navController
+            )
         }
 
     }

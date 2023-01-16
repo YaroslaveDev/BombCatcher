@@ -10,6 +10,8 @@ val Teal200 = Color(0xFF03DAC5)
 val Secondary = Color(0xFF8AAF9D)
 val Primary = Color(0xFFF4511E)
 
+val BaseGreenLight = Color(0xFFDBF0E7)
+
 val Green_Outside_Shadow = Color(0xFF617A6E)
 val Green_Inside_Shadow = Color(0xFF759585)
 

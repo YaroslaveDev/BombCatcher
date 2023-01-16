@@ -10,9 +10,11 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import com.pfv.bombcatcher.R
 import com.pfv.bombcatcher.ui.base.buttons.BaseShadowBtn
 import com.pfv.bombcatcher.ui.base.buttons.RectangleBaseBtn
+import com.pfv.bombcatcher.ui.navigation.Screens
 
 @Composable
 fun HomeScreenLogo(){
@@ -32,7 +34,9 @@ fun HomeScreenLogo(){
 }
 
 @Composable
-fun HomeScreenActionBlock(){
+fun HomeScreenActionBlock(
+    navController: NavController
+){
     Column(
         modifier = Modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.Center,
@@ -40,7 +44,10 @@ fun HomeScreenActionBlock(){
     ) {
         BaseShadowBtn(
             text = stringResource(id = R.string.start)
-        )
+        ){
+            navController.navigate(Screens.GameScreen.route)
+        }
+
         Row(
             modifier = Modifier
                 .fillMaxWidth()
