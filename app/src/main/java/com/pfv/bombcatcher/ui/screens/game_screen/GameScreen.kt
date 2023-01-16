@@ -1,13 +1,12 @@
 package com.pfv.bombcatcher.ui.screens.game_screen
 
-import android.util.DisplayMetrics
-import android.view.WindowManager
+import android.widget.Toast
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -16,17 +15,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.drawscope.translate
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.vectorResource
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelStore
 import androidx.lifecycle.ViewModelStoreOwner
-import androidx.lifecycle.get
-import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import com.pfv.bombcatcher.R
 import com.pfv.bombcatcher.tools.getScreenSize
@@ -48,17 +44,20 @@ fun GameScreen(
 
     val vector = ImageVector.vectorResource(id = R.drawable.ic_bomb)
     val painter = rememberVectorPainter(image = vector)
-    val screenSize = context.getScreenSize(density = LocalDensity.current, configuration = LocalConfiguration.current)
+    val screenSize = context.getScreenSize(
+        density = LocalDensity.current,
+        configuration = LocalConfiguration.current
+    )
 
-    var xPos by rememberSaveable { mutableStateOf( Random.nextInt(90,  screenSize.width - 90 )) }
-    var yPos by rememberSaveable { mutableStateOf( -90 ) }
+    var xPos by rememberSaveable { mutableStateOf(Random.nextInt(90, screenSize.width - 90)) }
+    var yPos by rememberSaveable { mutableStateOf(-90) }
 
-    LaunchedEffect(yPos){
+    LaunchedEffect(yPos) {
 
-        if (yPos >= screenSize.height - 90){
+        if (yPos >= screenSize.height - 90) {
             yPos = -90
             xPos = Random.nextInt(0, screenSize.width - 90)
-        }else{
+        } else {
             yPos += 10
         }
         delay(10)
@@ -68,11 +67,11 @@ fun GameScreen(
         modifier = Modifier
             .fillMaxSize()
             .background(color = BaseGreenLight),
-    ){
+    ) {
 
         ScoreElement(
             modifier = Modifier.align(alignment = Alignment.TopCenter),
-            score = "0"
+            score = "${xPos} - ${yPos}"
         )
 
         Image(
@@ -82,7 +81,26 @@ fun GameScreen(
         )
 
         Canvas(
-            modifier = Modifier.fillMaxSize(),
+            modifier = Modifier
+                .fillMaxSize()
+                .pointerInput(Unit) {
+                    detectTapGestures(
+                        onTap = { tapOffset ->
+                            Toast
+                                .makeText(
+                                    context, checkIsBombCatch(
+                                        clickXPos = tapOffset.x.toInt(),
+                                        clickYPos = tapOffset.y.toInt(),
+                                        bombXPos = xPos,
+                                        bombYPos = yPos,
+                                        imgWidth = vector.defaultWidth.roundToPx(),
+                                        imgHeight = vector.defaultHeight.roundToPx()
+                                    ).toString(), Toast.LENGTH_SHORT
+                                )
+                                .show()
+                        }
+                    )
+                },
             contentDescription = "game_field",
         ) {
 
@@ -95,6 +113,19 @@ fun GameScreen(
             }
         }
     }
+}
 
+private fun checkIsBombCatch(
+    clickXPos: Int,
+    clickYPos: Int,
+    bombXPos: Int,
+    bombYPos: Int,
+    imgWidth: Int,
+    imgHeight: Int
+): Boolean {
+
+    return (
+            clickXPos > bombXPos && clickXPos < (bombXPos + imgWidth) && clickYPos > bombYPos && clickYPos < (bombYPos + imgHeight)
+            )
 
 }
