@@ -25,6 +25,8 @@ import androidx.lifecycle.ViewModelStoreOwner
 import androidx.navigation.NavController
 import com.pfv.bombcatcher.R
 import com.pfv.bombcatcher.tools.getScreenSize
+import com.pfv.bombcatcher.ui.navigation.Screens
+import com.pfv.bombcatcher.ui.screens.game_over_screen.GameOverScreen
 import com.pfv.bombcatcher.ui.screens.game_screen.components.ScoreElement
 import com.pfv.bombcatcher.ui.theme.BaseGreenLight
 import kotlinx.coroutines.delay
@@ -33,7 +35,7 @@ import kotlin.random.Random
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun GameScreen(
-    navController: NavController
+    navController: NavController,
 ) {
 
     val vmContext = LocalContext.current as ViewModelStoreOwner
@@ -71,11 +73,6 @@ fun GameScreen(
             .fillMaxSize()
             .background(color = BaseGreenLight),
     ) {
-
-        ScoreElement(
-            modifier = Modifier.align(alignment = Alignment.TopCenter),
-            score = score.toString()
-        )
 
         Image(
             modifier = Modifier.align(alignment = Alignment.BottomCenter),
@@ -121,11 +118,28 @@ fun GameScreen(
             }
         }
 
+        ScoreElement(
+            modifier = Modifier.align(alignment = Alignment.TopCenter),
+            score = score.toString(),
+            navigateToHome = {
+                navController.navigate(Screens.HomeScreen.route){
+                    navController.popBackStack()
+                }
+            }
+        )
+
         if (isGameOver){
             Image(
                 modifier = Modifier.align(alignment = Alignment.BottomCenter),
                 painter = painterResource(id = R.drawable.ic_boom),
                 contentDescription = "boom"
+            )
+        }
+
+        if (isGameOver){
+            GameOverScreen(
+                navController = navController,
+                score = score.toString()
             )
         }
     }

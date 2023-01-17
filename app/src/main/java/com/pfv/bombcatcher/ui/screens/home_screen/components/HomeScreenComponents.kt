@@ -55,9 +55,9 @@ fun HomeScreenActionBlock(
             horizontalArrangement = Arrangement.Center,
         ) {
 
-            RectangleBaseBtn(icon = R.drawable.ic_users_leadboard)
+            RectangleBaseBtn(icon = R.drawable.ic_users_leadboard){}
             Spacer(modifier = Modifier.width(10.dp))
-            RectangleBaseBtn(icon = R.drawable.ic_settings)
+            RectangleBaseBtn(icon = R.drawable.ic_settings){}
         }
     }
 }

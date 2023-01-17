@@ -2,11 +2,10 @@ package com.pfv.bombcatcher.ui.base.buttons
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -20,16 +19,21 @@ import com.pfv.bombcatcher.ui.theme.Primary
 @Composable
 fun BaseShadowBtn(
     text: String,
+    color: Color = Primary,
+    modifier: Modifier = Modifier,
     onClick: () -> Unit
 ) {
 
     Box(
-        modifier = Modifier
+        modifier = modifier
             .size(width = 158.dp, height = 56.dp)
-            .clickable {
+            .background(color = color, shape = RoundedCornerShape(12.dp))
+            .clickable(
+                interactionSource = MutableInteractionSource(),
+                indication = null
+            ) {
                 onClick()
-            }
-            .background(color = Primary, shape = RoundedCornerShape(12.dp)),
+            },
         contentAlignment = Alignment.Center
     ) {
         Text(

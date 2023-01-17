@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "562444186357",
+    "project_id": "bombcatcher-f6e0c",
+    "storage_bucket": "bombcatcher-f6e0c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:562444186357:android:96b8c0c517fe1c1ea58bbc",
+        "android_client_info": {
+          "package_name": "com.pfv.bombcatcher"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "562444186357-5n9hk1m73grmsbe1j3ihvnuof4sa0eh6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.pfv.bombcatcher",
+            "certificate_hash": "3856d37ef342f3f15fb031af3856da1b5c8f0d62"
+          }
+        },
+        {
+          "client_id": "562444186357-h0hd0s0jt8ka0n8fi60g67l1ffrhdmo9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDMaRIaYybuTvnm2h0KwZEu7HM2TfEqaTY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "562444186357-h0hd0s0jt8ka0n8fi60g67l1ffrhdmo9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

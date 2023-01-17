@@ -1,6 +1,7 @@
 package com.pfv.bombcatcher.ui.base.buttons
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -13,13 +14,17 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.pfv.bombcatcher.ui.theme.Secondary
 
 @Composable
 fun RectangleBaseBtn(
-    icon: Int
+    icon: Int,
+    color: Color = Secondary,
+    modifier: Modifier = Modifier,
+    onClick: () -> Unit
 ) {
 
         Surface(
@@ -29,8 +34,11 @@ fun RectangleBaseBtn(
                     elevation = 0.dp,
                     shape = RoundedCornerShape(12.dp),
 
-                ),
-            color = Secondary,
+                )
+                .clickable {
+                    onClick()
+                },
+            color = color,
             shape = RoundedCornerShape(12.dp)
         ) {
 

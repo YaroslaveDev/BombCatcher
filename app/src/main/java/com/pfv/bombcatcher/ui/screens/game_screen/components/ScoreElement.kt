@@ -17,14 +17,17 @@ import com.pfv.bombcatcher.ui.base.buttons.RectangleBaseBtn
 @Composable
 fun ScoreElement(
     score: String,
-    modifier: Modifier
+    modifier: Modifier,
+    navigateToHome: () -> Unit
 ) {
 
     Row(
         modifier = modifier.fillMaxWidth().padding(top = 20.dp, start = 10.dp, end = 10.dp),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        RectangleBaseBtn(icon = R.drawable.ic_home)
+        RectangleBaseBtn(icon = R.drawable.ic_home){
+            navigateToHome()
+        }
         Surface(
             modifier = Modifier.fillMaxWidth(0.7f),
             color = Color.White,
@@ -43,6 +46,6 @@ fun ScoreElement(
                 )
             }
         }
-        RectangleBaseBtn(icon = R.drawable.ic_settings)
+        RectangleBaseBtn(icon = R.drawable.ic_settings){}
     }
 }
