@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.pfv.bombcatcher.ui.screens.auth_screen.AuthScreen
 import com.pfv.bombcatcher.ui.screens.game_screen.GameScreen
 import com.pfv.bombcatcher.ui.screens.home_screen.HomeScreen
 
@@ -20,7 +21,7 @@ fun AppNavigation() {
             route = Screens.HomeScreen.route
         ){
             HomeScreen(
-                navController = navController
+                navController = navController,
             )
         }
 
@@ -28,6 +29,14 @@ fun AppNavigation() {
             route = Screens.GameScreen.route
         ){
             GameScreen(
+                navController = navController
+            )
+        }
+
+        composable(
+            route = Screens.AuthScreen.route
+        ){
+            AuthScreen(
                 navController = navController
             )
         }

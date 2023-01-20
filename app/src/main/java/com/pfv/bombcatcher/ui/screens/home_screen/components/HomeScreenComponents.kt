@@ -35,7 +35,7 @@ fun HomeScreenLogo(){
 
 @Composable
 fun HomeScreenActionBlock(
-    navController: NavController
+    navController: NavController,
 ){
     Column(
         modifier = Modifier.fillMaxWidth(),
@@ -57,7 +57,9 @@ fun HomeScreenActionBlock(
 
             RectangleBaseBtn(icon = R.drawable.ic_users_leadboard){}
             Spacer(modifier = Modifier.width(10.dp))
-            RectangleBaseBtn(icon = R.drawable.ic_settings){}
+            RectangleBaseBtn(icon = R.drawable.ic_settings){
+                navController.navigate(Screens.AuthScreen.route)
+            }
         }
     }
 }

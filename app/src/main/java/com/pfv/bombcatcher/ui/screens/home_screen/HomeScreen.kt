@@ -13,7 +13,7 @@ import com.pfv.bombcatcher.ui.theme.BaseGreenLight
 
 @Composable
 fun HomeScreen(
-    navController: NavController
+    navController: NavController,
 ) {
 
     Box(
@@ -41,7 +41,7 @@ fun HomeScreen(
             contentAlignment = Alignment.Center
         ){
             HomeScreenActionBlock(
-                navController = navController
+                navController = navController,
             )
         }
 
