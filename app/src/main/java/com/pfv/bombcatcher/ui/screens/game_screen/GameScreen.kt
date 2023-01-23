@@ -53,13 +53,17 @@ fun GameScreen(
         configuration = LocalConfiguration.current
     )
 
+    var speed by remember { mutableStateOf(10) }
+
     var xPos by rememberSaveable { mutableStateOf(Random.nextInt(90, screenSize.width - 90)) }
     var yPos by rememberSaveable { mutableStateOf(-90) }
 
     LaunchedEffect(yPos) {
 
         if (yPos < screenSize.height - 90) {
-            yPos += 10
+
+            yPos += speed
+
 
         }else{
             isGameOver = true
@@ -100,6 +104,10 @@ fun GameScreen(
                                     score++
                                     yPos = -90
                                     xPos = Random.nextInt(0, screenSize.width - 90)
+                                    speed = gameSpeed(
+                                        score = score,
+                                        speed = speed
+                                    )
                                 }
 
                             }
@@ -158,4 +166,19 @@ private fun checkIsBombCatch(
             clickXPos > bombXPos && clickXPos < (bombXPos + imgWidth) && clickYPos > bombYPos && clickYPos < (bombYPos + imgHeight)
             )
 
+}
+
+private fun gameSpeed(score: Int, speed: Int): Int{
+//    return if (score < 5) 10
+//    else if (score in 5..9) 14
+//    else if (score in 10..14) 18
+//    else if (score in 15..19) 22
+//    else if (score in 20..24) 26
+//    else if (score in 25..29) 28
+//    else 10
+
+    return if (score % 5 == 0 && score != 0){
+        speed + 2
+    }
+    else speed
 }
