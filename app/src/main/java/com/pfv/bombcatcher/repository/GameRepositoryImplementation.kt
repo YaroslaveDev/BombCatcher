@@ -1,6 +1,8 @@
 package com.pfv.bombcatcher.repository
 
+import android.provider.Settings
 import com.google.firebase.firestore.CollectionReference
+import com.pfv.bombcatcher.App
 import com.pfv.bombcatcher.domain.model.GamerData
 import com.pfv.bombcatcher.domain.model.Response
 import com.pfv.bombcatcher.domain.repository.GameRepository
@@ -15,8 +17,6 @@ import javax.inject.Singleton
 class GameRepositoryImplementation @Inject constructor(
     private val gameDataRef: CollectionReference
 ): GameRepository {
-
-
 
     override fun getUserData(): Flow<Response<GamerData>> = callbackFlow {
         val snapshotListener = gameDataRef.orderBy("id").addSnapshotListener { snapshot, e ->
@@ -35,7 +35,7 @@ class GameRepositoryImplementation @Inject constructor(
 
     override suspend fun addGamerData(gamerData: GamerData): Response<Boolean> {
         return try {
-            val id = gameDataRef.document().id
+            val id = Settings.Secure.getString(App.context.contentResolver, Settings.Secure.ANDROID_ID)
             val gamerData = GamerData(
                 score = gamerData.score,
                 countOfGames = gamerData.countOfGames

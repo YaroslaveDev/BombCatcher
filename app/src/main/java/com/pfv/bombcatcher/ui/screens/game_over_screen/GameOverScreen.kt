@@ -1,11 +1,13 @@
 package com.pfv.bombcatcher.ui.screens.game_over_screen
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -17,6 +19,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.pfv.bombcatcher.R
+import com.pfv.bombcatcher.domain.model.GamerData
 import com.pfv.bombcatcher.ui.base.buttons.BaseShadowBtn
 import com.pfv.bombcatcher.ui.base.buttons.RectangleBaseBtn
 import com.pfv.bombcatcher.ui.screens.game_over_screen.GameOverScreenState.*
@@ -39,7 +42,20 @@ fun GameOverScreen(
     viewModel: GameOverScreenViewModel = hiltViewModel()
 ) {
 
+    LaunchedEffect(Unit){
+        viewModel.getTask()
+        viewModel.addGameData(
+            GamerData(
+                score = score.toInt()
+            )
+        )
 
+        if ((viewModel.gamerData?.score ?: 0) < score.toInt()){
+            viewModel.screenState = NewRecord
+        }else{
+            viewModel.screenState = InitialState
+        }
+    }
 
     Dialog(onDismissRequest = {}) {
         Box(
@@ -72,19 +88,19 @@ fun GameOverScreen(
                     }
                 }
 
-                Image(
-                    painter = painterResource(id = R.drawable.ic_score_stars),
-                    contentDescription = "stars"
-                )
-
-                Text(
-                    modifier = Modifier.padding(top = 16.dp),
-                    text = "YOUR NEW RECORD",
-                    textAlign = TextAlign.Center,
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 16.sp,
-                    lineHeight = 24.sp,
-                )
+//                Image(
+//                    painter = painterResource(id = R.drawable.ic_score_stars),
+//                    contentDescription = "stars"
+//                )
+//
+//                Text(
+//                    modifier = Modifier.padding(top = 16.dp),
+//                    text = "YOUR NEW RECORD",
+//                    textAlign = TextAlign.Center,
+//                    fontWeight = FontWeight.Bold,
+//                    fontSize = 16.sp,
+//                    lineHeight = 24.sp,
+//                )
 
                 Text(
                     modifier = Modifier.padding(bottom = 16.dp),
