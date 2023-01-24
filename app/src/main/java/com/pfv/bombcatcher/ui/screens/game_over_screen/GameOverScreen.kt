@@ -15,19 +15,31 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
-import androidx.navigation.NavController
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.pfv.bombcatcher.R
 import com.pfv.bombcatcher.ui.base.buttons.BaseShadowBtn
 import com.pfv.bombcatcher.ui.base.buttons.RectangleBaseBtn
-import com.pfv.bombcatcher.ui.navigation.Screens
+import com.pfv.bombcatcher.ui.screens.game_over_screen.GameOverScreenState.*
+import com.pfv.bombcatcher.ui.screens.game_over_screen.components.BaseScoreUi
+import com.pfv.bombcatcher.ui.screens.game_over_screen.components.NewScoreUi
+import com.pfv.bombcatcher.ui.screens.game_over_screen.components.TopPlayerUi
+import com.pfv.bombcatcher.ui.theme.BombCatcherTheme
 import com.pfv.bombcatcher.ui.theme.Primary
 import com.pfv.bombcatcher.ui.theme.Secondary
+import com.pfv.bombcatcher.ui.theme.Typography
+import com.pfv.bombcatcher.utils.TopPlayerPosition
 
 @Composable
 fun GameOverScreen(
-    navController: NavController,
     score: String,
+    navHome: () -> Unit,
+    restartGame: () -> Unit,
+    onShare: () -> Unit,
+    navLeadBoard: () -> Unit,
+    viewModel: GameOverScreenViewModel = hiltViewModel()
 ) {
+
+
 
     Dialog(onDismissRequest = {}) {
         Box(
@@ -44,6 +56,22 @@ fun GameOverScreen(
                 horizontalAlignment = Alignment.CenterHorizontally
 
             ) {
+
+                when(viewModel.screenState){
+                    is InitialState -> {
+                        BaseScoreUi()
+                    }
+                    is LeadBoard -> {
+                        //TopPlayerUi(playerPosition = TopPlayerPosition.FIRST)
+                    }
+                    is NewRecord -> {
+                        NewScoreUi()
+                    }
+                    is TopPlayer -> {
+                        //TopPlayerUi(playerPosition = )
+                    }
+                }
+
                 Image(
                     painter = painterResource(id = R.drawable.ic_score_stars),
                     contentDescription = "stars"
@@ -55,7 +83,7 @@ fun GameOverScreen(
                     textAlign = TextAlign.Center,
                     fontWeight = FontWeight.Bold,
                     fontSize = 16.sp,
-                    lineHeight = 24.sp
+                    lineHeight = 24.sp,
                 )
 
                 Text(
@@ -73,19 +101,23 @@ fun GameOverScreen(
                 ) {
 
                     RectangleBaseBtn(icon = R.drawable.ic_home){
-                        navController.navigate(Screens.HomeScreen.route){
-                            navController.popBackStack()
-                        }
+                        navHome()
                     }
                     Spacer(modifier = Modifier.width(12.dp))
-                    RectangleBaseBtn(icon = R.drawable.ic_share){}
+                    RectangleBaseBtn(icon = R.drawable.ic_share){
+                        onShare()
+                    }
                     Spacer(modifier = Modifier.width(12.dp))
-                    RectangleBaseBtn(icon = R.drawable.ic_restart, Primary){}
+                    RectangleBaseBtn(icon = R.drawable.ic_restart, Primary){
+                        restartGame()
+                    }
 
                 }
 
                 Box(
-                    modifier = Modifier.fillMaxWidth().padding(top = 16.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 16.dp),
                     contentAlignment = Alignment.Center
 
                 ){
@@ -93,7 +125,7 @@ fun GameOverScreen(
                         text = "LEADERBOARD",
                         color = Secondary,
                     ) {
-
+                        navLeadBoard()
                     }
                 }
             }

@@ -2,7 +2,6 @@ package com.pfv.bombcatcher.ui.screens.home_screen.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Button
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -77,4 +76,3 @@ fun HomeScreenBackImage(){
         )
     }
 }
-

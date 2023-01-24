@@ -27,32 +27,31 @@ fun RectangleBaseBtn(
     onClick: () -> Unit
 ) {
 
-        Surface(
-            modifier = Modifier
-                .size(56.dp)
-                .shadow(
-                    elevation = 0.dp,
-                    shape = RoundedCornerShape(12.dp),
+    Surface(
+        modifier = Modifier
+            .size(56.dp)
+            .shadow(
+                elevation = 0.dp,
+                shape = RoundedCornerShape(12.dp),
 
                 )
-                .clickable {
-                    onClick()
-                },
-            color = color,
-            shape = RoundedCornerShape(12.dp)
+            .clickable {
+                onClick()
+            },
+        color = color,
+        shape = RoundedCornerShape(12.dp)
+    ) {
+
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
         ) {
-
-            Box(
-                modifier = Modifier.fillMaxSize(),
-                contentAlignment = Alignment.Center
-            ){
-                Image(
-                    modifier = Modifier,
-                    painter = painterResource(id = icon),
-                    contentDescription = "img"
-                )
-            }
-
+            Image(
+                modifier = Modifier,
+                painter = painterResource(id = icon),
+                contentDescription = "img"
+            )
         }
 
+    }
 }

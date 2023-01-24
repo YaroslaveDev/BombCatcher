@@ -20,12 +20,14 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.vectorResource
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
 import androidx.navigation.NavController
 import com.pfv.bombcatcher.R
 import com.pfv.bombcatcher.tools.getScreenSize
 import com.pfv.bombcatcher.ui.navigation.Screens
+import com.pfv.bombcatcher.ui.screens.auth_screen.AuthScreen
 import com.pfv.bombcatcher.ui.screens.game_over_screen.GameOverScreen
 import com.pfv.bombcatcher.ui.screens.game_screen.components.ScoreElement
 import com.pfv.bombcatcher.ui.theme.BaseGreenLight
@@ -36,12 +38,10 @@ import kotlin.random.Random
 @Composable
 fun GameScreen(
     navController: NavController,
+    viewModel: GameScreenViewModel = hiltViewModel()
 ) {
 
-    val vmContext = LocalContext.current as ViewModelStoreOwner
     val context = LocalContext.current
-
-    val viewModel = ViewModelProvider(vmContext)[GameScreenViewModel::class.java]
 
     var score by rememberSaveable { mutableStateOf(0) }
     var isGameOver by remember { mutableStateOf(false) }
@@ -146,10 +146,34 @@ fun GameScreen(
 
         if (isGameOver){
             GameOverScreen(
-                navController = navController,
-                score = score.toString()
+                score = score.toString(),
+                navHome = {
+                    isGameOver = false
+                    navController.navigate(Screens.HomeScreen.route){
+                        navController.popBackStack()
+                    }
+                },
+                restartGame = {
+                    isGameOver = false
+                    score = 0
+                    yPos = -90
+                    speed = 10
+                },
+                onShare = {},
+                navLeadBoard = {
+                    if (viewModel.isUserSignedIn != null){
+
+                    }else{
+                        viewModel.showAuthScreen = true
+                    }
+                }
             )
         }
+
+        if (viewModel.showAuthScreen){
+            AuthScreen(navController = navController)
+        }
+
     }
 }
 
@@ -169,13 +193,6 @@ private fun checkIsBombCatch(
 }
 
 private fun gameSpeed(score: Int, speed: Int): Int{
-//    return if (score < 5) 10
-//    else if (score in 5..9) 14
-//    else if (score in 10..14) 18
-//    else if (score in 15..19) 22
-//    else if (score in 20..24) 26
-//    else if (score in 25..29) 28
-//    else 10
 
     return if (score % 5 == 0 && score != 0){
         speed + 2
