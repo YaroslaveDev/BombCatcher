@@ -13,6 +13,7 @@ import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
@@ -30,6 +31,7 @@ fun RectangleBaseBtn(
     Surface(
         modifier = Modifier
             .size(56.dp)
+            .clip(RoundedCornerShape(12.dp))
             .shadow(
                 elevation = 0.dp,
                 shape = RoundedCornerShape(12.dp),

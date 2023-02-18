@@ -1,7 +1,12 @@
 package com.pfv.bombcatcher.repository
 
 import android.provider.Settings
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.CollectionReference
+import com.google.firebase.firestore.ktx.snapshots
+import com.google.firebase.firestore.ktx.toObjects
+import com.google.firebase.ktx.Firebase
 import com.pfv.bombcatcher.App
 import com.pfv.bombcatcher.domain.model.GamerData
 import com.pfv.bombcatcher.domain.model.Response
@@ -9,14 +14,31 @@ import com.pfv.bombcatcher.domain.repository.GameRepository
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class GameRepositoryImplementation @Inject constructor(
-    private val gameDataRef: CollectionReference
+    private val gameDataRef: CollectionReference,
 ): GameRepository {
+
+    override fun getAllUsersData() = callbackFlow {
+        val snapshotListener = gameDataRef.orderBy("id").addSnapshotListener { snapshot, e ->
+            val booksResponse = if (snapshot != null) {
+                val books = snapshot.toObjects(GamerData::class.java)
+                Response.Success(books)
+            } else {
+                Response.Failure(e)
+            }
+            trySend(booksResponse)
+        }
+        awaitClose {
+            snapshotListener.remove()
+        }
+    }
+
 
     override fun getUserData(): Flow<Response<GamerData>> = callbackFlow {
         val snapshotListener = gameDataRef.orderBy("id").addSnapshotListener { snapshot, e ->
@@ -36,10 +58,7 @@ class GameRepositoryImplementation @Inject constructor(
     override suspend fun addGamerData(gamerData: GamerData): Response<Boolean> {
         return try {
             val id = Settings.Secure.getString(App.context.contentResolver, Settings.Secure.ANDROID_ID)
-            val gamerData = GamerData(
-                score = gamerData.score,
-                countOfGames = gamerData.countOfGames
-            )
+
             gameDataRef.document(id).set(gamerData).await()
             Response.Success(true)
         } catch (e: Exception) {

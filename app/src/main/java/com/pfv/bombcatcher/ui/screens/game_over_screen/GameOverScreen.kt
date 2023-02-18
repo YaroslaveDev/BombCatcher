@@ -1,7 +1,6 @@
 package com.pfv.bombcatcher.ui.screens.game_over_screen
 
 import android.util.Log
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -11,13 +10,14 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.pfv.bombcatcher.R
 import com.pfv.bombcatcher.domain.model.GamerData
 import com.pfv.bombcatcher.ui.base.buttons.BaseShadowBtn
@@ -25,12 +25,9 @@ import com.pfv.bombcatcher.ui.base.buttons.RectangleBaseBtn
 import com.pfv.bombcatcher.ui.screens.game_over_screen.GameOverScreenState.*
 import com.pfv.bombcatcher.ui.screens.game_over_screen.components.BaseScoreUi
 import com.pfv.bombcatcher.ui.screens.game_over_screen.components.NewScoreUi
-import com.pfv.bombcatcher.ui.screens.game_over_screen.components.TopPlayerUi
-import com.pfv.bombcatcher.ui.theme.BombCatcherTheme
+import com.pfv.bombcatcher.ui.screens.lead_board_screen.LeadBoardScreen
 import com.pfv.bombcatcher.ui.theme.Primary
 import com.pfv.bombcatcher.ui.theme.Secondary
-import com.pfv.bombcatcher.ui.theme.Typography
-import com.pfv.bombcatcher.utils.TopPlayerPosition
 
 @Composable
 fun GameOverScreen(
@@ -42,11 +39,18 @@ fun GameOverScreen(
     viewModel: GameOverScreenViewModel = hiltViewModel()
 ) {
 
+    val context = LocalContext.current
+    val googleSignInInfo = GoogleSignIn.getLastSignedInAccount(context)
+
     LaunchedEffect(Unit){
+        //viewModel.getAllGamersData()
         viewModel.getTask()
         viewModel.addGameData(
             GamerData(
-                score = score.toInt()
+                score = score.toInt(),
+                firstName = googleSignInInfo?.givenName?:"null",
+                lastName = googleSignInInfo?.familyName?:"null",
+                userImg = googleSignInInfo?.photoUrl.toString()
             )
         )
 
@@ -88,20 +92,6 @@ fun GameOverScreen(
                     }
                 }
 
-//                Image(
-//                    painter = painterResource(id = R.drawable.ic_score_stars),
-//                    contentDescription = "stars"
-//                )
-//
-//                Text(
-//                    modifier = Modifier.padding(top = 16.dp),
-//                    text = "YOUR NEW RECORD",
-//                    textAlign = TextAlign.Center,
-//                    fontWeight = FontWeight.Bold,
-//                    fontSize = 16.sp,
-//                    lineHeight = 24.sp,
-//                )
-
                 Text(
                     modifier = Modifier.padding(bottom = 16.dp),
                     text = score,
@@ -141,10 +131,14 @@ fun GameOverScreen(
                         text = "LEADERBOARD",
                         color = Secondary,
                     ) {
-                        navLeadBoard()
+                        viewModel.showLeadBoardScreen = true
                     }
                 }
             }
         }
+    }
+
+    if (viewModel.showLeadBoardScreen){
+        LeadBoardScreen()
     }
 }

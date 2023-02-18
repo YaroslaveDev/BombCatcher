@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.firestore.ktx.toObject
 import com.google.firebase.ktx.Firebase
@@ -22,23 +23,30 @@ import javax.inject.Inject
 @HiltViewModel
 class GameOverScreenViewModel @Inject constructor(
     private val useCases: UseCases
-): ViewModel() {
+) : ViewModel() {
 
     private var firestore: FirebaseFirestore = Firebase.firestore
     var screenState by mutableStateOf<GameOverScreenState>(GameOverScreenState.InitialState)
     var gamerData by mutableStateOf<GamerData?>(GamerData(1, 0))
         private set
+    var showLeadBoardScreen by mutableStateOf(false)
 
     fun addGameData(data: GamerData) = viewModelScope.launch {
 
-        if (data.score!! > (gamerData?.score)!!){
-            useCases.addUserData(data.copy(countOfGames = gamerData?.countOfGames?:(0+1)))
-        }else{
+        if ((data.score ?: 0) > (gamerData?.score?:0)) {
             useCases.addUserData(
-                GamerData(
-                    score = gamerData?.score ?:0,
-                    countOfGames = gamerData?.countOfGames?: (0 + 1)
+                data.copy(
+                    countOfGames = gamerData?.countOfGames ?: (0 + 1),
                 )
+            )
+
+        } else {
+            useCases.addUserData(
+                data.copy(
+                    score = gamerData?.score?:0,
+                    countOfGames = gamerData?.countOfGames ?: (0 + 1),
+                )
+
             )
         }
 
@@ -48,7 +56,11 @@ class GameOverScreenViewModel @Inject constructor(
         gamerData = currentCollection().get().await().toObject()
     }
 
-
     private fun currentCollection(): DocumentReference =
-        firestore.collection("game_data").document(Settings.Secure.getString(App.context.contentResolver, Settings.Secure.ANDROID_ID))
+        firestore.collection("game_data").document(
+            Settings.Secure.getString(
+                App.context.contentResolver,
+                Settings.Secure.ANDROID_ID
+            )
+        )
 }
