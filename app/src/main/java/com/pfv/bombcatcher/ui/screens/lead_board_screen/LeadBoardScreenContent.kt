@@ -22,7 +22,6 @@ import java.util.*
 fun LeadBoardScreenContent(
     viewModel: LeadBoardViewModel
 ) {
-
     Box(
         modifier = Modifier
             .fillMaxWidth(0.9f)

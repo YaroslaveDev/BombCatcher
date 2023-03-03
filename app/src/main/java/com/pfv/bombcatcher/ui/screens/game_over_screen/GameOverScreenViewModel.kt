@@ -1,5 +1,6 @@
 package com.pfv.bombcatcher.ui.screens.game_over_screen
 
+import android.annotation.SuppressLint
 import android.provider.Settings
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -26,7 +27,7 @@ class GameOverScreenViewModel @Inject constructor(
 ) : ViewModel() {
 
     private var firestore: FirebaseFirestore = Firebase.firestore
-    var screenState by mutableStateOf<GameOverScreenState>(GameOverScreenState.InitialState)
+    var screenState by mutableStateOf<GameOverScreenState>(GameOverScreenState.SetupState)
     var gamerData by mutableStateOf<GamerData?>(GamerData(1, 0))
         private set
     var showLeadBoardScreen by mutableStateOf(false)
@@ -56,6 +57,7 @@ class GameOverScreenViewModel @Inject constructor(
         gamerData = currentCollection().get().await().toObject()
     }
 
+    @SuppressLint("HardwareIds")
     private fun currentCollection(): DocumentReference =
         firestore.collection("game_data").document(
             Settings.Secure.getString(
