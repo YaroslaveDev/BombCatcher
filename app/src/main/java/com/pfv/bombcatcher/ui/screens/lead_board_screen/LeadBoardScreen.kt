@@ -42,37 +42,8 @@ fun LeadBoardScreen(
         )
     ) {
 
-        Box(
-            modifier = Modifier
-                .fillMaxWidth(0.9f)
-                .fillMaxHeight(0.8f)
-                .background(color = Color.White, shape = RoundedCornerShape(12.dp))
-        ) {
-            Column(
-                modifier = Modifier.fillMaxSize()
-            ) {
-
-                Text(
-                    modifier = Modifier.padding(vertical = 24.dp),
-                    text = stringResource(id = R.string.leader_board).uppercase(Locale.getDefault()),
-                    textAlign = TextAlign.Center,
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 16.sp,
-                    lineHeight = 24.sp
-                )
-
-                LazyColumn(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(bottom = 24.dp)
-                ) {
-                    items(
-                        items = viewModel.allGamersData
-                    ) {
-                        LeaderBoardListItem(gamerData = it)
-                    }
-                }
-            }
-        }
+        LeadBoardScreenContent(
+            viewModel = viewModel
+        )
     }
 }

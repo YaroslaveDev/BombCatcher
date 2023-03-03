@@ -1,20 +1,16 @@
 package com.pfv.bombcatcher.ui.screens.game_over_screen
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Text
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -43,13 +39,12 @@ fun GameOverScreen(
     val googleSignInInfo = GoogleSignIn.getLastSignedInAccount(context)
 
     LaunchedEffect(Unit){
-        //viewModel.getAllGamersData()
         viewModel.getTask()
         viewModel.addGameData(
             GamerData(
                 score = score.toInt(),
-                firstName = googleSignInInfo?.givenName?:"null",
-                lastName = googleSignInInfo?.familyName?:"null",
+                firstName = googleSignInInfo?.givenName.orEmpty(),
+                lastName = googleSignInInfo?.familyName.orEmpty(),
                 userImg = googleSignInInfo?.photoUrl.toString()
             )
         )
@@ -57,7 +52,7 @@ fun GameOverScreen(
         if ((viewModel.gamerData?.score ?: 0) < score.toInt()){
             viewModel.screenState = NewRecord
         }else{
-            viewModel.screenState = InitialState
+            viewModel.screenState = BaseState
         }
     }
 
@@ -78,8 +73,8 @@ fun GameOverScreen(
             ) {
 
                 when(viewModel.screenState){
-                    is InitialState -> {
-                        BaseScoreUi()
+                    is BaseState -> {
+                        BaseScoreUi(score)
                     }
                     is LeadBoard -> {
                         //TopPlayerUi(playerPosition = TopPlayerPosition.FIRST)
@@ -90,16 +85,14 @@ fun GameOverScreen(
                     is TopPlayer -> {
                         //TopPlayerUi(playerPosition = )
                     }
+                    is SetupState -> {
+                        CircularProgressIndicator(
+                            modifier = Modifier
+                                .padding(vertical = 16.dp),
+                            color = Secondary
+                        )
+                    }
                 }
-
-                Text(
-                    modifier = Modifier.padding(bottom = 16.dp),
-                    text = score,
-                    fontSize = 46.sp,
-                    lineHeight = 64.sp,
-                    fontWeight = FontWeight.ExtraBold,
-                    textAlign = TextAlign.Center
-                )
 
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -116,6 +109,7 @@ fun GameOverScreen(
                     Spacer(modifier = Modifier.width(12.dp))
                     RectangleBaseBtn(icon = R.drawable.ic_restart, Primary){
                         restartGame()
+                        viewModel.screenState = SetupState
                     }
 
                 }

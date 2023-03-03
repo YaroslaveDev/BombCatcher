@@ -12,7 +12,9 @@ import androidx.compose.ui.unit.sp
 import com.pfv.bombcatcher.R
 
 @Composable
-fun BaseScoreUi() {
+fun BaseScoreUi(
+    text: String
+) {
 
     Text(
         modifier = Modifier.padding(top = 16.dp),
@@ -21,5 +23,14 @@ fun BaseScoreUi() {
         fontWeight = FontWeight.Bold,
         fontSize = 16.sp,
         lineHeight = 24.sp
+    )
+
+    Text(
+        modifier = Modifier.padding(bottom = 16.dp),
+        text = text,
+        fontSize = 46.sp,
+        lineHeight = 64.sp,
+        fontWeight = FontWeight.ExtraBold,
+        textAlign = TextAlign.Center
     )
 }
