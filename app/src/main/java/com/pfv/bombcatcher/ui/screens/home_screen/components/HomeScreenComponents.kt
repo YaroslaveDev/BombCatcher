@@ -58,7 +58,7 @@ fun HomeScreenActionBlock(
             horizontalArrangement = Arrangement.Center,
         ) {
 
-            RectangleBaseBtn(icon = R.drawable.ic_users_leadboard) {
+            RectangleBaseBtn(icon = R.drawable.ic_users_leadboard, size = 56.dp) {
                 if (viewModel.isUserSignedIn != null) {
                     viewModel.showLeadBoardScreen = true
                 }else{
@@ -66,7 +66,7 @@ fun HomeScreenActionBlock(
                 }
             }
             Spacer(modifier = Modifier.width(10.dp))
-            RectangleBaseBtn(icon = R.drawable.ic_settings) {
+            RectangleBaseBtn(icon = R.drawable.ic_settings, size = 56.dp) {
 
             }
         }

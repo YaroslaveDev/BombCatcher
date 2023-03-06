@@ -1,9 +1,9 @@
 package com.pfv.bombcatcher.ui.screens.settings_screen
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Brush
@@ -15,8 +15,11 @@ fun SettingsScreen() {
 
     Box(
         modifier = Modifier
-            .size(200.dp)
-            .background(Color.Green)
-            .alpha(0.1f)
-    )
+            .fillMaxWidth(0.9f)
+            .fillMaxHeight(0.8f)
+            .background(color = Color.White),
+        contentAlignment = Alignment.Center
+    ){
+
+    }
 }

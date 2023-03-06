@@ -17,6 +17,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.pfv.bombcatcher.ui.theme.Secondary
 
@@ -25,12 +26,13 @@ fun RectangleBaseBtn(
     icon: Int,
     color: Color = Secondary,
     modifier: Modifier = Modifier,
-    onClick: () -> Unit
+    size: Dp = 56.dp,
+    onClick: () -> Unit,
 ) {
 
     Surface(
         modifier = Modifier
-            .size(56.dp)
+            .size(size)
             .clip(RoundedCornerShape(12.dp))
             .shadow(
                 elevation = 0.dp,

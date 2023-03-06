@@ -26,7 +26,7 @@ fun BaseShadowBtn(
 
     Box(
         modifier = modifier
-            .size(width = 158.dp, height = 56.dp)
+            .size(width = 228.dp, height = 56.dp)
             .background(color = color, shape = RoundedCornerShape(12.dp))
             .clickable(
                 interactionSource = MutableInteractionSource(),
