@@ -2,7 +2,6 @@ package com.pfv.bombcatcher.ui.screens.home_screen.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.BottomAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -15,9 +14,12 @@ import com.pfv.bombcatcher.R
 import com.pfv.bombcatcher.ui.base.buttons.BaseShadowBtn
 import com.pfv.bombcatcher.ui.base.buttons.RectangleBaseBtn
 import com.pfv.bombcatcher.ui.navigation.Screens
+import com.pfv.bombcatcher.ui.screens.auth_screen.AuthScreen
+import com.pfv.bombcatcher.ui.screens.home_screen.HomeScreenViewModel
+import com.pfv.bombcatcher.ui.screens.lead_board_screen.LeadBoardScreen
 
 @Composable
-fun HomeScreenLogo(){
+fun HomeScreenLogo() {
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -36,7 +38,8 @@ fun HomeScreenLogo(){
 @Composable
 fun HomeScreenActionBlock(
     navController: NavController,
-){
+    viewModel: HomeScreenViewModel
+) {
     Column(
         modifier = Modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.Center,
@@ -44,7 +47,7 @@ fun HomeScreenActionBlock(
     ) {
         BaseShadowBtn(
             text = stringResource(id = R.string.start)
-        ){
+        ) {
             navController.navigate(Screens.GameScreen.route)
         }
 
@@ -55,17 +58,41 @@ fun HomeScreenActionBlock(
             horizontalArrangement = Arrangement.Center,
         ) {
 
-            RectangleBaseBtn(icon = R.drawable.ic_users_leadboard){}
+            RectangleBaseBtn(icon = R.drawable.ic_users_leadboard) {
+                if (viewModel.isUserSignedIn != null) {
+                    viewModel.showLeadBoardScreen = true
+                }else{
+                    viewModel.showAuthScreen = true
+                }
+            }
             Spacer(modifier = Modifier.width(10.dp))
-            RectangleBaseBtn(icon = R.drawable.ic_settings){
+            RectangleBaseBtn(icon = R.drawable.ic_settings) {
 
             }
+        }
+    }
+
+    if (viewModel.showAuthScreen) {
+        AuthScreen(
+            navController = navController,
+            onDismiss = {
+                viewModel.showAuthScreen = false
+            }
+        ) {
+            navController.navigate(Screens.HomeScreen.route)
+            navController.popBackStack()
+        }
+    }
+
+    if (viewModel.showLeadBoardScreen){
+        LeadBoardScreen {
+            viewModel.showLeadBoardScreen = false
         }
     }
 }
 
 @Composable
-fun HomeScreenBackImage(){
+fun HomeScreenBackImage() {
     Column(
         modifier = Modifier.fillMaxWidth()
     ) {

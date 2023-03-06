@@ -5,5 +5,6 @@ data class GamerData(
     val countOfGames: Int? = 0,
     val firstName: String = "",
     val lastName: String = "",
-    val userImg: String = ""
+    val userImg: String = "",
+    val userId: String = ""
 )

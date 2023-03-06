@@ -1,22 +1,21 @@
 package com.pfv.bombcatcher.ui.screens.home_screen
 
 import androidx.compose.runtime.Composable
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.google.firebase.auth.FirebaseAuth
 
 @Composable
 fun HomeScreen(
+    viewModel: HomeScreenViewModel = hiltViewModel(),
     navController: NavController
 ) {
 
-    val isUserSignedIn = FirebaseAuth.getInstance().currentUser
+    HomeScreenContent(
+        navController,
+        viewModel
+    )
 
-//    LaunchedEffect(Unit){
-//        if (isUserSignedIn == null){
-//            navController.navigate(Screens.AuthScreen.route)
-//        }
-//    }
 
-    HomeScreenContent(navController)
 
 }

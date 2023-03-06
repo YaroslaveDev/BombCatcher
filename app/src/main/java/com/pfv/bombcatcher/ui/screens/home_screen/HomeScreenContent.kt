@@ -15,7 +15,8 @@ import com.pfv.bombcatcher.ui.theme.BaseGreenLight
 
 @Composable
 fun HomeScreenContent(
-    navController: NavController
+    navController: NavController,
+    viewModel: HomeScreenViewModel
 ) {
 
     Box(
@@ -44,6 +45,7 @@ fun HomeScreenContent(
         ){
             HomeScreenActionBlock(
                 navController = navController,
+                viewModel = viewModel
             )
         }
 

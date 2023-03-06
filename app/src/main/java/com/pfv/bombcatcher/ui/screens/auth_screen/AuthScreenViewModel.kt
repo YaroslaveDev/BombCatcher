@@ -19,7 +19,7 @@ class AuthScreenViewModel @Inject constructor(): ViewModel() {
 
     fun signWithCredential(credential: AuthCredential) = viewModelScope.launch {
         try {
-            authState.value = AuthScreenViewState.Loading
+            authState.value = AuthScreenViewState.SetupState
             Firebase.auth.signInWithCredential(credential).await()
             authState.value = AuthScreenViewState.Success
         } catch (e: Exception) {

@@ -17,3 +17,5 @@ val Green_Inside_Shadow = Color(0xFF759585)
 
 val Red_Outside_shadow = Color(0xFFCF451A)
 val Red_Inside_Shadow = Color(0xFFAB3915)
+
+val Surface = Color(0xFFF6FBF9)

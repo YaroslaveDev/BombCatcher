@@ -1,12 +1,7 @@
 package com.pfv.bombcatcher.repository
 
 import android.provider.Settings
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.CollectionReference
-import com.google.firebase.firestore.ktx.snapshots
-import com.google.firebase.firestore.ktx.toObjects
-import com.google.firebase.ktx.Firebase
 import com.pfv.bombcatcher.App
 import com.pfv.bombcatcher.domain.model.GamerData
 import com.pfv.bombcatcher.domain.model.Response
@@ -14,7 +9,6 @@ import com.pfv.bombcatcher.domain.repository.GameRepository
 import kotlinx.coroutines.channels.awaitClose
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 import javax.inject.Singleton

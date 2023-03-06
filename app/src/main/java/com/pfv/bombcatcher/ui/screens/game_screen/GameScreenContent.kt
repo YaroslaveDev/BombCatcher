@@ -96,7 +96,7 @@ fun GameScreenContent(
             score = viewModel.score.toString(),
             navigateToHome = {
                 navController.navigate(Screens.HomeScreen.route){
-                    navController.popBackStack()
+                    popUpTo(0)
                 }
             }
         )
@@ -115,7 +115,7 @@ fun GameScreenContent(
                 navHome = {
                     viewModel.isGameOver = false
                     navController.navigate(Screens.HomeScreen.route){
-                        navController.popBackStack()
+                        popUpTo(0)
                     }
                 },
                 restartGame = {
@@ -129,12 +129,16 @@ fun GameScreenContent(
                     if (viewModel.isUserSignedIn == null){
                         viewModel.showAuthScreen = true
                     }
-                }
+                },
+                navController = navController
             )
         }
 
         if (viewModel.showAuthScreen){
-            AuthScreen(navController = navController)
+            AuthScreen(
+                navController = navController,
+                onDismiss = {}
+            ){}
         }
 
     }

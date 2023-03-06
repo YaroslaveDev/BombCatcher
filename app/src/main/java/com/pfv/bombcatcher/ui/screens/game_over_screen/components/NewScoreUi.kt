@@ -14,7 +14,9 @@ import androidx.compose.ui.unit.sp
 import com.pfv.bombcatcher.R
 
 @Composable
-fun NewScoreUi() {
+fun NewScoreUi(
+    score: String
+) {
 
     Image(
         painter = painterResource(id = R.drawable.ic_score_stars),
@@ -28,5 +30,14 @@ fun NewScoreUi() {
         fontWeight = FontWeight.Bold,
         fontSize = 16.sp,
         lineHeight = 24.sp
+    )
+
+    Text(
+        modifier = Modifier.padding(bottom = 16.dp),
+        text = score,
+        fontSize = 46.sp,
+        lineHeight = 64.sp,
+        fontWeight = FontWeight.ExtraBold,
+        textAlign = TextAlign.Center
     )
 }
