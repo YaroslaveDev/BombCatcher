@@ -27,8 +27,10 @@ fun GameOverScreen(
     val googleSignInInfo = GoogleSignIn.getLastSignedInAccount(context)
 
     LaunchedEffect(Unit){
-        viewModel.getTask()
-        viewModel.getAllGamersData(score)
+        if (viewModel.isUserSignedIn != null){
+            viewModel.getTask()
+            viewModel.getAllGamersData(score)
+        }
         viewModel.addGameData(
             GamerData(
                 score = score.toInt(),
