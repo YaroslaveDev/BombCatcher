@@ -1,15 +1,12 @@
 package com.pfv.bombcatcher.ui.navigation
 
-import android.os.SystemClock
-import android.util.Log
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.pfv.bombcatcher.ui.screens.auth_screen.AuthScreen
 import com.pfv.bombcatcher.ui.screens.game_screen.GameScreen
 import com.pfv.bombcatcher.ui.screens.home_screen.HomeScreen
-import com.pfv.bombcatcher.ui.screens.lead_board_screen.LeadBoardScreen
 import com.pfv.bombcatcher.ui.screens.settings_screen.SettingsScreen
 
 @Composable

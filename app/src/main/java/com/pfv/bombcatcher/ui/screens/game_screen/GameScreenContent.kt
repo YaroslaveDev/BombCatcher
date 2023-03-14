@@ -1,6 +1,7 @@
 package com.pfv.bombcatcher.ui.screens.game_screen
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.util.Log
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.ExperimentalFoundationApi
@@ -9,8 +10,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.drawscope.translate
@@ -18,12 +18,14 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.graphics.vector.VectorPainter
 import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.vectorResource
 import androidx.navigation.NavController
 import com.pfv.bombcatcher.App
 import com.pfv.bombcatcher.R
 import com.pfv.bombcatcher.tools.baseScreenHeight
+import com.pfv.bombcatcher.tools.createShareIntent
 import com.pfv.bombcatcher.tools.screenHeight
 import com.pfv.bombcatcher.tools.screenWidth
 import com.pfv.bombcatcher.ui.navigation.Screens
@@ -43,6 +45,9 @@ fun GameScreenContent(
 
     val vector = ImageVector.vectorResource(id = R.drawable.ic_bomb)
     val painter = rememberVectorPainter(image = vector)
+    val activity = (LocalContext.current as Activity)
+
+    var shareState by remember { mutableStateOf(false) }
 
     CoroutineScope(Dispatchers.Unconfined).launch {
 
@@ -59,6 +64,10 @@ fun GameScreenContent(
         } else {
             viewModel.isGameOver = true
         }
+    }
+
+    if (shareState){
+        createShareIntent(activity)
     }
 
     Box(
@@ -105,7 +114,9 @@ fun GameScreenContent(
                     viewModel.yPos = -90f
                     viewModel.speed = viewModel.defaultSpeed
                 },
-                onShare = {},
+                onShare = {
+                    shareState = true
+                },
                 navLeadBoard = {
                     if (viewModel.isUserSignedIn == null) {
                         viewModel.showAuthScreen = true
