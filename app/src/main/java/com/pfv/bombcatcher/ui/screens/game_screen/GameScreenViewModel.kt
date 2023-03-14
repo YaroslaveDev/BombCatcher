@@ -16,12 +16,15 @@ import kotlin.random.Random
 @HiltViewModel
 class GameScreenViewModel @Inject constructor() : ViewModel() {
 
-    var fallingTime by mutableStateOf(4f)
+    var defaultSpeed by mutableStateOf(App.context.screenHeight/800)
     var score by mutableStateOf(0)
     var isGameOver by mutableStateOf(false)
-    var speed by mutableStateOf((App.context.screenHeight/(fallingTime * 100)))
+    var speed by mutableStateOf(App.context.screenHeight/800)
     var xPos by mutableStateOf(Random.nextInt(90, App.context.screenWidth - 90))
-    var yPos by mutableStateOf(-90)
+    var yPos by mutableStateOf(-90f)
+
+    var prevFallTime by mutableStateOf(0L)
+    var currentFallTime by mutableStateOf(0L)
 
     val isUserSignedIn by mutableStateOf(FirebaseAuth.getInstance().currentUser)
     var showAuthScreen by mutableStateOf(false)
@@ -30,7 +33,7 @@ class GameScreenViewModel @Inject constructor() : ViewModel() {
         clickXPos: Int,
         clickYPos: Int,
         bombXPos: Int,
-        bombYPos: Int,
+        bombYPos: Float,
         imgWidth: Int,
         imgHeight: Int
     ): Boolean {
@@ -41,11 +44,13 @@ class GameScreenViewModel @Inject constructor() : ViewModel() {
 
     }
 
-    fun gameSpeed(score: Int, speed: Int): Int {
+    fun gameSpeed(score: Int): Int {
 
-        return if (score % 5 == 0 && score != 0) {
-            fallingTime + 0.2
-        } else speed
+        if (score % 5 == 0 && score != 0) {
+            speed += 1
+        }
+
+        return speed
     }
 
 

@@ -1,5 +1,6 @@
 package com.pfv.bombcatcher.ui.screens.lead_board_screen.list_item
 
+import android.annotation.SuppressLint
 import android.provider.Settings
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -11,6 +12,7 @@ import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -21,17 +23,20 @@ import com.pfv.bombcatcher.ui.theme.BaseGreenLight
 import com.pfv.bombcatcher.ui.theme.Surface
 import com.skydoves.landscapist.glide.GlideImage
 
+@SuppressLint("HardwareIds")
 @Composable
 fun LeaderBoardListItem(
     gamerData: GamerData,
     index: Int
 ) {
 
+    val context = LocalContext.current
+
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .background(
-                color = if (gamerData.userId == Settings.Secure.ANDROID_ID) BaseGreenLight else Surface
+                color = if (gamerData.userId == Settings.Secure.getString(context.contentResolver, Settings.Secure.ANDROID_ID)) BaseGreenLight else Surface
             )
             .padding(horizontal = 16.dp, vertical = 8.dp)
     ) {

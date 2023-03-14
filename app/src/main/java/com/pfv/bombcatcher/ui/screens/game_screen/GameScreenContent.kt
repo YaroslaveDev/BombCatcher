@@ -1,5 +1,7 @@
 package com.pfv.bombcatcher.ui.screens.game_screen
 
+import android.annotation.SuppressLint
+import android.util.Log
 import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
@@ -21,6 +23,7 @@ import androidx.compose.ui.res.vectorResource
 import androidx.navigation.NavController
 import com.pfv.bombcatcher.App
 import com.pfv.bombcatcher.R
+import com.pfv.bombcatcher.tools.baseScreenHeight
 import com.pfv.bombcatcher.tools.screenHeight
 import com.pfv.bombcatcher.tools.screenWidth
 import com.pfv.bombcatcher.ui.navigation.Screens
@@ -28,9 +31,10 @@ import com.pfv.bombcatcher.ui.screens.auth_screen.AuthScreen
 import com.pfv.bombcatcher.ui.screens.game_over_screen.GameOverScreen
 import com.pfv.bombcatcher.ui.screens.game_screen.components.ScoreElement
 import com.pfv.bombcatcher.ui.theme.BaseGreenLight
-import kotlinx.coroutines.delay
+import kotlinx.coroutines.*
 import kotlin.random.Random
 
+@SuppressLint("CoroutineCreationDuringComposition")
 @Composable
 fun GameScreenContent(
     viewModel: GameScreenViewModel,
@@ -40,16 +44,21 @@ fun GameScreenContent(
     val vector = ImageVector.vectorResource(id = R.drawable.ic_bomb)
     val painter = rememberVectorPainter(image = vector)
 
-    LaunchedEffect(viewModel.yPos) {
+    CoroutineScope(Dispatchers.Unconfined).launch {
 
-        if (viewModel.yPos < App.context.screenHeight - 90) {
+        viewModel.currentFallTime = System.currentTimeMillis()
 
-            viewModel.yPos += viewModel.speed
+        if (viewModel.yPos < App.context.baseScreenHeight - 90) {
+
+            if ((viewModel.currentFallTime - viewModel.prevFallTime) >= 10) {
+
+                viewModel.yPos += viewModel.speed
+                viewModel.prevFallTime = viewModel.currentFallTime
+            }
+
         } else {
             viewModel.isGameOver = true
         }
-
-        delay(10)
     }
 
     Box(
@@ -67,13 +76,13 @@ fun GameScreenContent(
             modifier = Modifier.align(alignment = Alignment.TopCenter),
             score = viewModel.score.toString(),
             navigateToHome = {
-                navController.navigate(Screens.HomeScreen.route){
+                navController.navigate(Screens.HomeScreen.route) {
                     popUpTo(0)
                 }
             }
         )
 
-        if (viewModel.isGameOver){
+        if (viewModel.isGameOver) {
             Image(
                 modifier = Modifier.align(alignment = Alignment.BottomCenter),
                 painter = painterResource(id = R.drawable.ic_boom),
@@ -81,24 +90,24 @@ fun GameScreenContent(
             )
         }
 
-        if (viewModel.isGameOver){
+        if (viewModel.isGameOver) {
             GameOverScreen(
                 score = viewModel.score.toString(),
                 navHome = {
                     viewModel.isGameOver = false
-                    navController.navigate(Screens.HomeScreen.route){
+                    navController.navigate(Screens.HomeScreen.route) {
                         popUpTo(0)
                     }
                 },
                 restartGame = {
                     viewModel.isGameOver = false
                     viewModel.score = 0
-                    viewModel.yPos = -90
-                    viewModel.speed = App.context.screenHeight/400
+                    viewModel.yPos = -90f
+                    viewModel.speed = viewModel.defaultSpeed
                 },
                 onShare = {},
                 navLeadBoard = {
-                    if (viewModel.isUserSignedIn == null){
+                    if (viewModel.isUserSignedIn == null) {
                         viewModel.showAuthScreen = true
                     }
                 },
@@ -106,11 +115,11 @@ fun GameScreenContent(
             )
         }
 
-        if (viewModel.showAuthScreen){
+        if (viewModel.showAuthScreen) {
             AuthScreen(
                 navController = navController,
                 onDismiss = {}
-            ){}
+            ) {}
         }
 
     }
@@ -122,8 +131,8 @@ private fun MovableObject(
     viewModel: GameScreenViewModel,
     vector: ImageVector,
     painter: VectorPainter
-){
-    if (!viewModel.isGameOver){
+) {
+    if (!viewModel.isGameOver) {
         Canvas(
             modifier = Modifier
                 .fillMaxSize()
@@ -141,11 +150,10 @@ private fun MovableObject(
                                 )
                             ) {
                                 viewModel.score++
-                                viewModel.yPos = -90
+                                viewModel.yPos = -90f
                                 viewModel.xPos = Random.nextInt(0, App.context.screenWidth - 90)
                                 viewModel.speed = viewModel.gameSpeed(
-                                    score = viewModel.score,
-                                    speed = viewModel.speed
+                                    score = viewModel.score
                                 )
                             }
 
@@ -155,7 +163,7 @@ private fun MovableObject(
             contentDescription = "game_field",
         ) {
 
-            translate(left = viewModel.xPos.toFloat(), top = viewModel.yPos.toFloat()) {
+            translate(left = viewModel.xPos.toFloat(), top = viewModel.yPos) {
                 with(painter) {
                     draw(
                         painter.intrinsicSize

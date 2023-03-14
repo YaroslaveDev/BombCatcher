@@ -1,5 +1,6 @@
 package com.pfv.bombcatcher.ui.screens.game_over_screen
 
+import android.annotation.SuppressLint
 import android.provider.Settings
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -12,6 +13,7 @@ import com.pfv.bombcatcher.domain.model.GamerData
 import com.pfv.bombcatcher.ui.screens.game_over_screen.GameOverScreenState.NewRecord
 import com.pfv.bombcatcher.ui.screens.lead_board_screen.LeadBoardScreen
 
+@SuppressLint("HardwareIds")
 @Composable
 fun GameOverScreen(
     score: String,
@@ -37,7 +39,7 @@ fun GameOverScreen(
                 firstName = googleSignInInfo?.givenName.orEmpty(),
                 lastName = googleSignInInfo?.familyName.orEmpty(),
                 userImg = googleSignInInfo?.photoUrl.toString(),
-                userId = Settings.Secure.ANDROID_ID
+                userId = Settings.Secure.getString(context.contentResolver, Settings.Secure.ANDROID_ID)
             )
         )
     }
