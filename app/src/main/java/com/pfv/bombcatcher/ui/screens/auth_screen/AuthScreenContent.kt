@@ -44,8 +44,6 @@ fun AuthScreenContent(
     val context = LocalContext.current
     val webClientId = stringResource(id = R.string.web_client_id)
 
-
-
     Dialog(onDismissRequest = {
         onDismiss()
     }) {

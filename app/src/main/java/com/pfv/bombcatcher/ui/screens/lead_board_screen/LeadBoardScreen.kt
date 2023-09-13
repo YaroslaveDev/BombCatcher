@@ -12,7 +12,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.pfv.bombcatcher.ui.theme.Secondary
 import java.util.*
 
-@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun LeadBoardScreen(
     viewModel: LeadBoardViewModel = hiltViewModel(),

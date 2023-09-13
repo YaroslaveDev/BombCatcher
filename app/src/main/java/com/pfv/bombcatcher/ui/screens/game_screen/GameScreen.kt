@@ -17,6 +17,8 @@ import kotlinx.coroutines.*
 import com.pfv.bombcatcher.R
 import com.pfv.bombcatcher.tools.screenHeight
 import com.pfv.bombcatcher.tools.screenWidth
+import com.pfv.bombcatcher.ui.screens.game_screen.nav_state.GameScreenNavState
+import com.pfv.bombcatcher.ui.screens.game_screen.ui_state.GameScreenUiState
 import com.pfv.bombcatcher.ui.theme.BaseGreenLight
 
 @SuppressLint("CoroutineCreationDuringComposition")
@@ -42,4 +44,25 @@ fun GameScreen(
         viewModel = viewModel,
         navController = navController
     )
+
+    when(viewModel.uiState){
+        GameScreenUiState.InitState -> {
+
+        }
+        GameScreenUiState.SetupState -> {
+
+        }
+    }
+
+    LaunchedEffect(viewModel.navState){
+        when(viewModel.navState){
+            GameScreenNavState.InitState -> {
+
+            }
+            GameScreenNavState.OnBackNav -> {
+                navController.navigateUp()
+            }
+        }
+    }
+
 }

@@ -15,7 +15,6 @@ import com.pfv.bombcatcher.ui.theme.BaseGreenLight
 
 @Composable
 fun HomeScreenContent(
-    navController: NavController,
     viewModel: HomeScreenViewModel
 ) {
 
@@ -44,7 +43,6 @@ fun HomeScreenContent(
             contentAlignment = Alignment.Center
         ){
             HomeScreenActionBlock(
-                navController = navController,
                 viewModel = viewModel
             )
         }
