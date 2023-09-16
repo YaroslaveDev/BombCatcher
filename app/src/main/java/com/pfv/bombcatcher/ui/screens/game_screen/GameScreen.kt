@@ -21,6 +21,7 @@ import com.pfv.bombcatcher.tools.createShareIntent
 import com.pfv.bombcatcher.tools.screenHeight
 import com.pfv.bombcatcher.tools.screenWidth
 import com.pfv.bombcatcher.ui.screens.auth_screen.AuthScreen
+import com.pfv.bombcatcher.ui.screens.game_screen.components.PausePopup
 import com.pfv.bombcatcher.ui.screens.game_screen.event.GameScreenEvent
 import com.pfv.bombcatcher.ui.screens.game_screen.nav_state.GameScreenNavState
 import com.pfv.bombcatcher.ui.screens.game_screen.ui_state.GameScreenUiState
@@ -78,6 +79,14 @@ fun GameScreen(
         }
         GameScreenUiState.ShowLeadBoard -> {
 
+        }
+
+        GameScreenUiState.PauseState -> {
+            PausePopup(
+                onResumeGame = {
+                    viewModel.resetUiState()
+                }
+            )
         }
     }
 

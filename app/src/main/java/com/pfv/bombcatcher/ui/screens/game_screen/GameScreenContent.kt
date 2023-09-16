@@ -35,6 +35,7 @@ import com.pfv.bombcatcher.ui.screens.game_screen.components.ScoreElement
 import com.pfv.bombcatcher.ui.screens.game_screen.event.GameScreenEvent
 import com.pfv.bombcatcher.ui.screens.game_screen.game_state.GameState
 import com.pfv.bombcatcher.ui.screens.game_screen.screen_state.GameScreenState
+import com.pfv.bombcatcher.ui.screens.game_screen.ui_state.GameScreenUiState
 import com.pfv.bombcatcher.ui.theme.BaseGreenLight
 import kotlinx.coroutines.*
 import kotlin.random.Random
@@ -49,7 +50,7 @@ fun GameScreenContent(
     val vector = ImageVector.vectorResource(id = R.drawable.ic_bomb)
     val painter = rememberVectorPainter(image = vector)
 
-    if (viewModel.gameState == GameState.GameInProgress) {
+    if (viewModel.gameState == GameState.GameInProgress &&  viewModel.uiState != GameScreenUiState.PauseState) {
 
         CoroutineScope(Dispatchers.Unconfined).launch {
 
@@ -85,6 +86,9 @@ fun GameScreenContent(
             score = viewModel.score.toString(),
             navigateToHome = {
                 viewModel.reduceEvent(GameScreenEvent.OnBackNav)
+            },
+            onPauseClick = {
+                viewModel.reduceEvent(GameScreenEvent.OnPauseClick)
             }
         )
 

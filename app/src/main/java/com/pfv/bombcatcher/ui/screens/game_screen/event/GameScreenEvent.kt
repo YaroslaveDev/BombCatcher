@@ -5,4 +5,5 @@ sealed class GameScreenEvent{
     object OnShareClick: GameScreenEvent()
     object OnLeadBoardClick: GameScreenEvent()
     object SetGameOver: GameScreenEvent()
+    object OnPauseClick: GameScreenEvent()
 }

@@ -7,4 +7,5 @@ sealed class GameScreenUiState{
     object ShareState: GameScreenUiState()
     object ShowLeadBoard: GameScreenUiState()
     object ShowAuthPopup: GameScreenUiState()
+    object PauseState: GameScreenUiState()
 }

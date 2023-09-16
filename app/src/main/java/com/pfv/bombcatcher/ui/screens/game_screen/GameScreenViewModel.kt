@@ -59,6 +59,10 @@ class GameScreenViewModel @Inject constructor() : ViewModel() {
                 gameState = GameState.GameOver
                 screenState = GameScreenState.GameOver
             }
+
+            GameScreenEvent.OnPauseClick -> {
+                uiState = GameScreenUiState.PauseState
+            }
         }
     }
 

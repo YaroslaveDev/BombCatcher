@@ -18,7 +18,8 @@ import com.pfv.bombcatcher.ui.base.buttons.RectangleBaseBtn
 fun ScoreElement(
     score: String,
     modifier: Modifier,
-    navigateToHome: () -> Unit
+    navigateToHome: () -> Unit,
+    onPauseClick: () -> Unit
 ) {
 
     Row(
@@ -46,6 +47,8 @@ fun ScoreElement(
                 )
             }
         }
-        RectangleBaseBtn(icon = R.drawable.ic_settings){}
+        RectangleBaseBtn(icon = R.drawable.ic_pause){
+            onPauseClick()
+        }
     }
 }
