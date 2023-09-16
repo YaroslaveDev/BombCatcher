@@ -7,6 +7,6 @@
     <string name="leader_board">Leaderboard</string>
     <string name="please_sign_up">Sign up to compete with the leaders</string>
     <string name="sign_up">SIGN UP</string>
-
+    <string name="empty_lead_board">YOU\'RE THE FIRST</string>
 
 </resources>

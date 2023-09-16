@@ -32,6 +32,10 @@ class HomeScreenViewModel @Inject constructor(): ViewModel() {
             HomeScreenEvent.OnStartClick -> {
                 navState = HomeScreenNavState.NavToGameScreen
             }
+
+            HomeScreenEvent.OnPrivacyPolicyClick -> {
+                uiState = HomeScreenUiState.ShowPrivacyPolicyPopup
+            }
         }
     }
 

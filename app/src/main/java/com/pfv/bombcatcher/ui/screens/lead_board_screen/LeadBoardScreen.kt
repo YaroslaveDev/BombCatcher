@@ -15,7 +15,8 @@ import java.util.*
 @Composable
 fun LeadBoardScreen(
     viewModel: LeadBoardViewModel = hiltViewModel(),
-    onScreenClose: () -> Unit
+    onScreenClose: () -> Unit,
+    onStartClick: () -> Unit
 ) {
 
     LaunchedEffect(Unit) {
@@ -40,7 +41,8 @@ fun LeadBoardScreen(
             is LeadBoardScreenState.Success -> {
                 LeadBoardScreenContent(
                     viewModel = viewModel,
-                    onClick = onScreenClose
+                    onClick = onScreenClose,
+                    onStartClick = onStartClick
                 )
             }
         }

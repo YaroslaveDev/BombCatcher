@@ -19,3 +19,13 @@ val Red_Outside_shadow = Color(0xFFCF451A)
 val Red_Inside_Shadow = Color(0xFFAB3915)
 
 val Surface = Color(0xFFF6FBF9)
+
+val gradientColors =
+    listOf(
+        Color(0xFFFF595A),
+        Color(0xFFFFC766),
+        Color(0xFF35A07F),
+        Color(0xFF35A07F),
+        Color(0xFFFFC766),
+        Color(0xFFFF595A)
+    )

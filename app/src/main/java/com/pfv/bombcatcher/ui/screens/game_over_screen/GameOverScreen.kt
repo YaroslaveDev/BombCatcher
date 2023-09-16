@@ -10,6 +10,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.pfv.bombcatcher.domain.model.GamerData
+import com.pfv.bombcatcher.ui.navigation.Screens
 import com.pfv.bombcatcher.ui.screens.game_over_screen.GameOverScreenState.NewRecord
 import com.pfv.bombcatcher.ui.screens.lead_board_screen.LeadBoardScreen
 
@@ -51,15 +52,22 @@ fun GameOverScreen(
             score = score,
             navHome = { navHome() },
             restartGame = { restartGame() },
-            onShare = { onShare() },
+            onShare = {
+//                onShare()
+                      },
             navController = navController
         )
     }
 
     if (viewModel.showLeadBoardScreen){
-        LeadBoardScreen{
-            viewModel.showLeadBoardScreen = false
-
-        }
+        LeadBoardScreen(
+            onScreenClose = {
+                viewModel.showLeadBoardScreen = false
+            },
+            onStartClick = {
+                navController.navigate(Screens.GameScreen.route)
+                viewModel.showLeadBoardScreen = false
+            }
+        )
     }
 }

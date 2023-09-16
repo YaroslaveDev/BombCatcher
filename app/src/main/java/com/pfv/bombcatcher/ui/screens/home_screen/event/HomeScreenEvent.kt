@@ -5,4 +5,5 @@ sealed class HomeScreenEvent{
     object OnStartClick: HomeScreenEvent()
     object OnLeadBoardClick: HomeScreenEvent()
     object OnSettingsClick: HomeScreenEvent()
+    object OnPrivacyPolicyClick: HomeScreenEvent()
 }
