@@ -8,4 +8,5 @@ sealed class GameScreenUiState{
     object ShowLeadBoard: GameScreenUiState()
     object ShowAuthPopup: GameScreenUiState()
     object PauseState: GameScreenUiState()
+    object ShowSettingsPopup: GameScreenUiState()
 }

@@ -9,4 +9,6 @@
     <string name="sign_up">SIGN UP</string>
     <string name="empty_lead_board">YOU\'RE THE FIRST</string>
     <string name="game_paused">GAME PAUSED</string>
+    <string name="settings">SETTINGS</string>
+    <string name="mode">Mode</string>
 </resources>

@@ -11,6 +11,7 @@ import com.pfv.bombcatcher.ui.screens.home_screen.nav_state.HomeScreenNavState
 import com.pfv.bombcatcher.ui.screens.home_screen.ui_state.HomeScreenUiState
 import com.pfv.bombcatcher.ui.screens.lead_board_screen.LeadBoardScreen
 import com.pfv.bombcatcher.ui.screens.privacy_policy_screen.PrivacyPolicyScreen
+import com.pfv.bombcatcher.ui.screens.settings_screen.SettingsScreen
 
 @Composable
 fun HomeScreen(
@@ -48,7 +49,9 @@ fun HomeScreen(
             )
         }
         HomeScreenUiState.ShowSettings -> {
-
+            SettingsScreen {
+                viewModel.resetUiState()
+            }
         }
 
         HomeScreenUiState.ShowAuthPopup -> {

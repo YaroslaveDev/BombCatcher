@@ -44,10 +44,14 @@ fun AppNavigation() {
             )
         }
 
-        composable(
-            route = Screens.SettingsScreen.route
-        ){
-            SettingsScreen()
-        }
+//        composable(
+//            route = Screens.SettingsScreen.route
+//        ){
+//            SettingsScreen(
+//                onDismiss = {
+//
+//                }
+//            )
+//        }
     }
 }

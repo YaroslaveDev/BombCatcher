@@ -35,7 +35,7 @@ class GameRepositoryImplementation @Inject constructor(
 
 
     override fun getUserData(): Flow<Response<GamerData>> = callbackFlow {
-        val snapshotListener = gameDataRef.orderBy("id").addSnapshotListener { snapshot, e ->
+        val snapshotListener = gameDataRef.orderBy("userId").addSnapshotListener { snapshot, e ->
             val booksResponse = if (snapshot != null) {
                 val gamerData = snapshot.toObjects(GamerData::class.java).first()
                 Response.Success(gamerData)

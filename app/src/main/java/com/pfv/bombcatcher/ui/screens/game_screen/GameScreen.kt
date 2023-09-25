@@ -26,6 +26,7 @@ import com.pfv.bombcatcher.ui.screens.game_screen.event.GameScreenEvent
 import com.pfv.bombcatcher.ui.screens.game_screen.nav_state.GameScreenNavState
 import com.pfv.bombcatcher.ui.screens.game_screen.ui_state.GameScreenUiState
 import com.pfv.bombcatcher.ui.screens.home_screen.event.HomeScreenEvent
+import com.pfv.bombcatcher.ui.screens.settings_screen.SettingsScreen
 import com.pfv.bombcatcher.ui.theme.BaseGreenLight
 
 @SuppressLint("CoroutineCreationDuringComposition")
@@ -87,6 +88,14 @@ fun GameScreen(
                     viewModel.resetUiState()
                 }
             )
+        }
+
+        GameScreenUiState.ShowSettingsPopup -> {
+//            SettingsScreen(
+//                onDismiss = {
+//                    viewModel.resetUiState()
+//                }
+//            )
         }
     }
 
