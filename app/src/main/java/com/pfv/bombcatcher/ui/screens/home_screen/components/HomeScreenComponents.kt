@@ -61,10 +61,10 @@ fun HomeScreenActionBlock(
             RectangleBaseBtn(icon = R.drawable.ic_users_leadboard, size = 56.dp) {
                 viewModel.reduceEvent(HomeScreenEvent.OnLeadBoardClick)
             }
-            Spacer(modifier = Modifier.width(10.dp))
-            RectangleBaseBtn(icon = R.drawable.ic_settings, size = 56.dp) {
-                viewModel.reduceEvent(HomeScreenEvent.OnSettingsClick)
-            }
+//            Spacer(modifier = Modifier.width(10.dp))
+//            RectangleBaseBtn(icon = R.drawable.ic_settings, size = 56.dp) {
+//                viewModel.reduceEvent(HomeScreenEvent.OnSettingsClick)
+//            }
             Spacer(modifier = Modifier.width(10.dp))
             RectangleBaseBtn(icon = R.drawable.ic_security, size = 56.dp) {
                 viewModel.reduceEvent(HomeScreenEvent.OnPrivacyPolicyClick)

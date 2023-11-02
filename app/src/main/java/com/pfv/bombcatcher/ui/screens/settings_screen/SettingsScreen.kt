@@ -133,11 +133,13 @@ fun SettingsScreen(
                         color = Color.Black
                     )
 
-//                    BaseAppToggleButton(
-//                        currentSelection = ,
-//                        toggleStates = ,
-//                        onToggleChange = {}
-//                    )
+                    BaseAppToggleButton(
+                        currentSelection = R.drawable.ic_security,
+                        toggleStates = listOf(R.drawable.ic_security, R.drawable.ic_settings),
+                        onToggleChange = {
+
+                        }
+                    )
                 }
             }
 

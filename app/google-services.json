@@ -14,11 +14,35 @@
       },
       "oauth_client": [
         {
+          "client_id": "562444186357-47rhi5248rb842ausbd426dhkuobq4ch.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.pfv.bombcatcher",
+            "certificate_hash": "118c94a763573b454124a72f612ac66a67ad8dc4"
+          }
+        },
+        {
           "client_id": "562444186357-5n9hk1m73grmsbe1j3ihvnuof4sa0eh6.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.pfv.bombcatcher",
             "certificate_hash": "3856d37ef342f3f15fb031af3856da1b5c8f0d62"
+          }
+        },
+        {
+          "client_id": "562444186357-gkldd966i976i18gapv844vglnq1b3e3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.pfv.bombcatcher",
+            "certificate_hash": "21c300335d9204cfc6d4dcbd45b32cb7f7222733"
+          }
+        },
+        {
+          "client_id": "562444186357-p8gigi2t34cs1p4lmki6n2fh6dqitssu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.pfv.bombcatcher",
+            "certificate_hash": "3766055e6dbabbf72efd80f39bd210a1f49b201f"
           }
         },
         {

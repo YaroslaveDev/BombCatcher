@@ -86,10 +86,10 @@ fun GameOverScreenContent(
                                 RectangleBaseBtn(icon = R.drawable.ic_home) {
                                     navHome()
                                 }
-                                Spacer(modifier = Modifier.width(12.dp))
-                                RectangleBaseBtn(icon = R.drawable.ic_share) {
-                                    onShare()
-                                }
+//                                Spacer(modifier = Modifier.width(12.dp))
+//                                RectangleBaseBtn(icon = R.drawable.ic_share) {
+//                                    onShare()
+//                                }
                                 Spacer(modifier = Modifier.width(12.dp))
                                 RectangleBaseBtn(icon = R.drawable.ic_restart, Primary) {
                                     restartGame()
