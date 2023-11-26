@@ -10,6 +10,8 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -21,9 +23,12 @@ import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.pfv.bombcatcher.App
 import com.pfv.bombcatcher.R
+import com.pfv.bombcatcher.SetSystemBarColors
+import com.pfv.bombcatcher.anim.BoomAnimation
 import com.pfv.bombcatcher.tools.baseScreenHeight
 import com.pfv.bombcatcher.tools.createShareIntent
 import com.pfv.bombcatcher.tools.screenHeight
@@ -31,12 +36,15 @@ import com.pfv.bombcatcher.tools.screenWidth
 import com.pfv.bombcatcher.ui.navigation.Screens
 import com.pfv.bombcatcher.ui.screens.auth_screen.AuthScreen
 import com.pfv.bombcatcher.ui.screens.game_over_screen.GameOverScreen
+import com.pfv.bombcatcher.ui.screens.game_over_screen.GameOverScreenState
 import com.pfv.bombcatcher.ui.screens.game_screen.components.ScoreElement
 import com.pfv.bombcatcher.ui.screens.game_screen.event.GameScreenEvent
 import com.pfv.bombcatcher.ui.screens.game_screen.game_state.GameState
 import com.pfv.bombcatcher.ui.screens.game_screen.screen_state.GameScreenState
 import com.pfv.bombcatcher.ui.screens.game_screen.ui_state.GameScreenUiState
 import com.pfv.bombcatcher.ui.theme.BaseGreenLight
+import com.pfv.bombcatcher.ui.theme.Red_Inside_Shadow
+import com.pfv.bombcatcher.ui.theme.Red_Outside_shadow
 import kotlinx.coroutines.*
 import kotlin.random.Random
 
@@ -95,11 +103,13 @@ fun GameScreenContent(
         when(viewModel.screenState){
             GameScreenState.InitState -> {}
             GameScreenState.GameOver -> {
-                Image(
-                    modifier = Modifier.align(alignment = Alignment.BottomCenter),
-                    painter = painterResource(id = R.drawable.ic_boom),
-                    contentDescription = "boom"
-                )
+//                Image(
+//                    modifier = Modifier.align(alignment = Alignment.BottomCenter),
+//                    painter = painterResource(id = R.drawable.ic_boom),
+//                    contentDescription = "boom"
+//                )
+
+
 
                 GameOverScreen(
                     score = viewModel.score.toString(),
@@ -122,6 +132,11 @@ fun GameScreenContent(
                     navController = navController
                 )
 
+            }
+            GameScreenState.GameOverAnimation -> {
+                BoomAnimation(modifier = Modifier.fillMaxSize().align(alignment = Alignment.Center)){
+                    viewModel.screenState = GameScreenState.GameOver
+                }
             }
 
         }
@@ -154,7 +169,7 @@ private fun MovableObject(
                             ) {
                                 viewModel.score++
                                 viewModel.yPos = -90f
-                                viewModel.xPos = Random.nextInt(0, App.context.screenWidth - 90)
+                                viewModel.xPos = Random.nextInt(0, App.context.screenWidth - 180)
                                 viewModel.speed = viewModel.gameSpeed(
                                     score = viewModel.score
                                 )

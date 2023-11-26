@@ -57,7 +57,7 @@ class GameScreenViewModel @Inject constructor() : ViewModel() {
 
             GameScreenEvent.SetGameOver -> {
                 gameState = GameState.GameOver
-                screenState = GameScreenState.GameOver
+                screenState = GameScreenState.GameOverAnimation
             }
 
             GameScreenEvent.OnPauseClick -> {

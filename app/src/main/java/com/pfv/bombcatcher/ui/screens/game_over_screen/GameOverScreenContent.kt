@@ -11,17 +11,20 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.pfv.bombcatcher.R
 import com.pfv.bombcatcher.anim.CardWithAnimatedBorder
 import com.pfv.bombcatcher.ui.base.buttons.BaseShadowBtn
+import com.pfv.bombcatcher.ui.base.buttons.CustomLargeBtn
 import com.pfv.bombcatcher.ui.base.buttons.RectangleBaseBtn
 import com.pfv.bombcatcher.ui.screens.auth_screen.AuthScreen
 import com.pfv.bombcatcher.ui.screens.game_over_screen.components.BaseScoreUi
 import com.pfv.bombcatcher.ui.screens.game_over_screen.components.NewScoreUi
 import com.pfv.bombcatcher.ui.screens.game_over_screen.components.TopPlayerUi
+import com.pfv.bombcatcher.ui.theme.Green_Outside_Shadow
 import com.pfv.bombcatcher.ui.theme.Primary
 import com.pfv.bombcatcher.ui.theme.Secondary
 
@@ -104,10 +107,14 @@ fun GameOverScreenContent(
                                 contentAlignment = Alignment.Center
 
                             ) {
-                                BaseShadowBtn(
-                                    text = "LEADERBOARD",
+
+                                CustomLargeBtn(
+                                    modifier = Modifier
+                                        .padding(bottom = 4.dp),
+                                    text = stringResource(id = R.string.leader_board).uppercase(),
                                     color = Secondary,
-                                ) {
+                                    shadowColor = Green_Outside_Shadow
+                                ){
                                     signUpOrLeaderBoard(
                                         onShowLeadBoard = {
                                             viewModel.showLeadBoardScreen = true

@@ -4,4 +4,5 @@ sealed class GameScreenState{
 
     object InitState: GameScreenState()
     object GameOver: GameScreenState()
+    object GameOverAnimation: GameScreenState()
 }

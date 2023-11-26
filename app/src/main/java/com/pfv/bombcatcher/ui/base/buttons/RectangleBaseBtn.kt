@@ -20,6 +20,7 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import com.pfv.bombcatcher.tools.bounceClick
 import com.pfv.bombcatcher.ui.theme.Secondary
 
 @Composable
@@ -36,15 +37,17 @@ fun RectangleBaseBtn(
             .size(size)
             .clip(RoundedCornerShape(12.dp))
             .shadow(
-                elevation = 0.dp,
+                elevation = 10.dp,
                 shape = RoundedCornerShape(12.dp),
 
                 )
+            .bounceClick()
             .clickable {
                 onClick()
             },
         color = color,
-        shape = RoundedCornerShape(12.dp)
+        shape = RoundedCornerShape(12.dp),
+        elevation = 20.dp
     ) {
 
         Box(

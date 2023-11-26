@@ -1,6 +1,7 @@
 package com.pfv.bombcatcher
 
 import android.os.Bundle
+import android.view.View
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Box
@@ -11,11 +12,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.core.view.WindowCompat
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import com.pfv.bombcatcher.tools.hideSystemUI
 import com.pfv.bombcatcher.ui.navigation.AppNavigation
 import com.pfv.bombcatcher.ui.theme.BaseGreenLight
 import com.pfv.bombcatcher.ui.theme.BombCatcherTheme
-import com.pfv.bombcatcher.ui.theme.Secondary
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
