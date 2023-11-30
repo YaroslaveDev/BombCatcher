@@ -37,6 +37,14 @@ fun GameScreen(
 ) {
 
     val activity = LocalContext.current as Activity
+    val coroutineScope = rememberCoroutineScope()
+
+    LaunchedEffect(viewModel.displayExplotion.needToDisplay){
+        coroutineScope.launch {
+            delay(100)
+            viewModel.setInvisibleExplotion()
+        }
+    }
 
     Box(
         modifier = Modifier

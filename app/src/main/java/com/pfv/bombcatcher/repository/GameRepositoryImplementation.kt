@@ -59,5 +59,4 @@ class GameRepositoryImplementation @Inject constructor(
             Response.Failure(e)
         }
     }
-
 }

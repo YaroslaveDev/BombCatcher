@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.drawscope.translate
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.graphics.vector.VectorPainter
@@ -33,6 +34,7 @@ import com.pfv.bombcatcher.tools.baseScreenHeight
 import com.pfv.bombcatcher.tools.createShareIntent
 import com.pfv.bombcatcher.tools.screenHeight
 import com.pfv.bombcatcher.tools.screenWidth
+import com.pfv.bombcatcher.tools.vibrateEffect
 import com.pfv.bombcatcher.ui.navigation.Screens
 import com.pfv.bombcatcher.ui.screens.auth_screen.AuthScreen
 import com.pfv.bombcatcher.ui.screens.game_over_screen.GameOverScreen
@@ -57,6 +59,9 @@ fun GameScreenContent(
 
     val vector = ImageVector.vectorResource(id = R.drawable.ic_bomb)
     val painter = rememberVectorPainter(image = vector)
+    val context = LocalContext.current
+    val explosionVector = ImageVector.vectorResource(id = R.drawable.ic_explosion)
+    val explosionPainter = rememberVectorPainter(image = explosionVector)
 
     if (viewModel.gameState == GameState.GameInProgress &&  viewModel.uiState != GameScreenUiState.PauseState) {
 
@@ -73,6 +78,7 @@ fun GameScreenContent(
                 }
 
             } else {
+                vibrateEffect(context, 1000)
                 viewModel.reduceEvent(GameScreenEvent.SetGameOver)
             }
         }
@@ -86,7 +92,8 @@ fun GameScreenContent(
         MovableObject(
             viewModel = viewModel,
             vector = vector,
-            painter = painter
+            painter = painter,
+            explosionPainter = explosionPainter
         )
 
         ScoreElement(
@@ -103,13 +110,6 @@ fun GameScreenContent(
         when(viewModel.screenState){
             GameScreenState.InitState -> {}
             GameScreenState.GameOver -> {
-//                Image(
-//                    modifier = Modifier.align(alignment = Alignment.BottomCenter),
-//                    painter = painterResource(id = R.drawable.ic_boom),
-//                    contentDescription = "boom"
-//                )
-
-
 
                 GameOverScreen(
                     score = viewModel.score.toString(),
@@ -148,8 +148,12 @@ fun GameScreenContent(
 private fun MovableObject(
     viewModel: GameScreenViewModel,
     vector: ImageVector,
-    painter: VectorPainter
+    painter: VectorPainter,
+    explosionPainter: VectorPainter
 ) {
+
+    val context = LocalContext.current
+
     if (viewModel.screenState == GameScreenState.InitState) {
         Canvas(
             modifier = Modifier
@@ -167,6 +171,8 @@ private fun MovableObject(
                                     imgHeight = vector.defaultHeight.roundToPx()
                                 )
                             ) {
+                                vibrateEffect(context)
+                                viewModel.setVisibleExplotion(Offset(viewModel.xPos.toFloat(), viewModel.yPos))
                                 viewModel.score++
                                 viewModel.yPos = -90f
                                 viewModel.xPos = Random.nextInt(0, App.context.screenWidth - 180)
@@ -186,6 +192,16 @@ private fun MovableObject(
                     draw(
                         painter.intrinsicSize
                     )
+                }
+            }
+
+            if (viewModel.displayExplotion.needToDisplay){
+                translate(left = viewModel.displayExplotion.position.x, top = viewModel.displayExplotion.position.y) {
+                    with(explosionPainter) {
+                        draw(
+                            explosionPainter.intrinsicSize
+                        )
+                    }
                 }
             }
         }

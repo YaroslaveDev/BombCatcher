@@ -6,9 +6,11 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableLongStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.geometry.Offset
 import androidx.lifecycle.ViewModel
 import com.google.firebase.auth.FirebaseAuth
 import com.pfv.bombcatcher.App
+import com.pfv.bombcatcher.model.DisplayExplotionDvo
 import com.pfv.bombcatcher.tools.screenHeight
 import com.pfv.bombcatcher.tools.screenWidth
 import com.pfv.bombcatcher.ui.screens.game_screen.event.GameScreenEvent
@@ -33,6 +35,13 @@ class GameScreenViewModel @Inject constructor() : ViewModel() {
     var speed by mutableIntStateOf(App.context.screenHeight/800)
     var xPos by mutableIntStateOf(Random.nextInt(90, App.context.screenWidth - 90))
     var yPos by mutableFloatStateOf(-90f)
+
+    var displayExplotion by mutableStateOf(
+        DisplayExplotionDvo(
+            position = Offset.Zero,
+            needToDisplay = false
+        )
+    )
 
     var prevFallTime by mutableLongStateOf(0L)
     var currentFallTime by mutableLongStateOf(0L)
@@ -64,6 +73,19 @@ class GameScreenViewModel @Inject constructor() : ViewModel() {
                 uiState = GameScreenUiState.PauseState
             }
         }
+    }
+
+    fun setVisibleExplotion(pos: Offset){
+        displayExplotion = displayExplotion.copy(
+            needToDisplay = true,
+            position = pos
+        )
+    }
+
+    fun setInvisibleExplotion(){
+        displayExplotion = displayExplotion.copy(
+            needToDisplay = false,
+        )
     }
 
     fun processLeadBoardClick(){
