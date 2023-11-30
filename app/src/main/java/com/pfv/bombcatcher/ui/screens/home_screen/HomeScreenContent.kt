@@ -10,6 +10,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 import com.pfv.bombcatcher.ui.screens.home_screen.components.HomeScreenActionBlock
+import com.pfv.bombcatcher.ui.screens.home_screen.components.HomeScreenAnimationView
 import com.pfv.bombcatcher.ui.screens.home_screen.components.HomeScreenBackImage
 import com.pfv.bombcatcher.ui.screens.home_screen.components.HomeScreenLogo
 import com.pfv.bombcatcher.ui.screens.home_screen.components.HomeScreenLogoCustom
@@ -26,6 +27,8 @@ fun HomeScreenContent(
             .background(color = BaseGreenLight)
     ){
 
+        HomeScreenAnimationView()
+
         Box(
             modifier = Modifier.fillMaxWidth(),
             contentAlignment = Alignment.TopCenter
@@ -33,7 +36,6 @@ fun HomeScreenContent(
             Column {
 
                 HomeScreenLogo()
-//                HomeScreenLogoCustom()
             }
         }
 
