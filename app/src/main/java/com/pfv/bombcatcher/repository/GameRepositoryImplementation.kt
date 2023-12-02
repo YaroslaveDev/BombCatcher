@@ -16,7 +16,7 @@ import javax.inject.Singleton
 @Singleton
 class GameRepositoryImplementation @Inject constructor(
     private val gameDataRef: CollectionReference,
-): GameRepository {
+) : GameRepository {
 
     override fun getAllUsersData() = callbackFlow {
         val snapshotListener = gameDataRef.orderBy("id").addSnapshotListener { snapshot, e ->
@@ -49,11 +49,30 @@ class GameRepositoryImplementation @Inject constructor(
         }
     }
 
+    //    override suspend fun addGamerData(gamerData: GamerData): Response<Boolean> {
+//        return try {
+//            val id = Settings.Secure.getString(App.context.contentResolver, Settings.Secure.ANDROID_ID)
+//
+//            gameDataRef.document(id).set(gamerData).await()
+//            Response.Success(true)
+//        } catch (e: Exception) {
+//            Response.Failure(e)
+//        }
+//    }
     override suspend fun addGamerData(gamerData: GamerData): Response<Boolean> {
         return try {
-            val id = Settings.Secure.getString(App.context.contentResolver, Settings.Secure.ANDROID_ID)
+            val querySnapshot = gameDataRef.whereEqualTo("userId", gamerData.userId).get().await()
 
-            gameDataRef.document(id).set(gamerData).await()
+            if (querySnapshot.documents.isNotEmpty()) {
+                // Update existing document
+                val documentId = querySnapshot.documents.first().id
+                gameDataRef.document(documentId).set(gamerData).await()
+            } else {
+                // Add new document
+                val newDocumentId = gameDataRef.document().id
+                gameDataRef.document(newDocumentId).set(gamerData).await()
+            }
+
             Response.Success(true)
         } catch (e: Exception) {
             Response.Failure(e)
