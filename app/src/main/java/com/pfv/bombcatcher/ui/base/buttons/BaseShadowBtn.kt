@@ -104,27 +104,6 @@ fun CustomLargeBtn(
                 fontWeight = FontWeight.Bold
             )
         }
-
-
-
-//        Box(
-//            modifier = Modifier
-//                .width(172.dp)
-//                .height(56.dp)
-//                .background(Primary, shape = RoundedCornerShape(12.dp)),
-//            contentAlignment = Alignment.Center
-//        ){
-//            Text(
-//                modifier = Modifier,
-//                text = "BUTTON",
-//                color = Color.White,
-//                fontSize = 14.sp,
-//                fontWeight = FontWeight.Bold
-//            )
-//        }
     }
-
-
-
 
 }
