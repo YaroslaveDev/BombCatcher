@@ -32,6 +32,7 @@ import com.pfv.bombcatcher.SetSystemBarColors
 import com.pfv.bombcatcher.anim.BoomAnimation
 import com.pfv.bombcatcher.tools.baseScreenHeight
 import com.pfv.bombcatcher.tools.createShareIntent
+import com.pfv.bombcatcher.tools.playAudioFile
 import com.pfv.bombcatcher.tools.screenHeight
 import com.pfv.bombcatcher.tools.screenWidth
 import com.pfv.bombcatcher.tools.vibrateEffect
@@ -78,6 +79,7 @@ fun GameScreenContent(
                 }
 
             } else {
+                playAudioFile(context, R.raw.game_over_sound)
                 vibrateEffect(context, 1000)
                 viewModel.reduceEvent(GameScreenEvent.SetGameOver)
             }
@@ -172,6 +174,7 @@ private fun MovableObject(
                                 )
                             ) {
                                 vibrateEffect(context)
+                                playAudioFile(context, R.raw.sound_catched_bomb)
                                 viewModel.setVisibleExplotion(Offset(viewModel.xPos.toFloat(), viewModel.yPos))
                                 viewModel.score++
                                 viewModel.yPos = -90f
