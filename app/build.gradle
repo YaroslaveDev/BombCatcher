@@ -4,6 +4,7 @@ plugins {
     id 'kotlin-kapt'
     id 'dagger.hilt.android.plugin'
     id 'com.google.gms.google-services'
+    id("org.jetbrains.kotlin.plugin.serialization")
 }
 
 android {
@@ -104,4 +105,6 @@ dependencies {
     implementation("com.google.accompanist:accompanist-systemuicontroller:0.28.0")
     implementation "androidx.compose.material3:material3:1.1.2"
     implementation("com.airbnb.android:lottie-compose:6.0.1")
+
+    implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.0")
 }

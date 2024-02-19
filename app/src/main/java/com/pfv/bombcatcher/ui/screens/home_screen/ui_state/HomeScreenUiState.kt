@@ -7,4 +7,5 @@ sealed class HomeScreenUiState{
     object ShowSettings: HomeScreenUiState()
     object ShowAuthPopup: HomeScreenUiState()
     object ShowPrivacyPolicyPopup: HomeScreenUiState()
+    object ShowCustomizationPopup : HomeScreenUiState()
 }

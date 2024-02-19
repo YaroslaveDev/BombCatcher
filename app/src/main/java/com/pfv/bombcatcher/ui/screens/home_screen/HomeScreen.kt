@@ -6,6 +6,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.pfv.bombcatcher.ui.navigation.Screens
 import com.pfv.bombcatcher.ui.screens.auth_screen.AuthScreen
+import com.pfv.bombcatcher.ui.screens.customization_screen.GameCustomizationScreen
 import com.pfv.bombcatcher.ui.screens.home_screen.event.HomeScreenEvent
 import com.pfv.bombcatcher.ui.screens.home_screen.nav_state.HomeScreenNavState
 import com.pfv.bombcatcher.ui.screens.home_screen.ui_state.HomeScreenUiState
@@ -68,6 +69,13 @@ fun HomeScreen(
 
         HomeScreenUiState.ShowPrivacyPolicyPopup -> {
             PrivacyPolicyScreen {
+                viewModel.resetUiState()
+            }
+        }
+
+        HomeScreenUiState.ShowCustomizationPopup -> {
+
+            GameCustomizationScreen() {
                 viewModel.resetUiState()
             }
         }

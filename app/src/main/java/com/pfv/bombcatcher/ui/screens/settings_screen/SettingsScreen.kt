@@ -31,7 +31,9 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.pfv.bombcatcher.R
 import com.pfv.bombcatcher.domain.model.GamerData
 import com.pfv.bombcatcher.domain.use_cases.GetUserData
+import com.pfv.bombcatcher.model.ToggleComponentDvo
 import com.pfv.bombcatcher.ui.components.BaseAppToggleButton
+import com.pfv.bombcatcher.ui.components.BaseToggleItem
 import com.pfv.bombcatcher.ui.screens.lead_board_screen.components.EmptyLeadBoard
 import com.pfv.bombcatcher.ui.screens.lead_board_screen.list_item.LeaderBoardListItem
 import com.pfv.bombcatcher.ui.theme.BaseGreenLight
@@ -81,20 +83,20 @@ fun SettingsScreen(
                 Row(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = 16.dp, vertical = 8.dp)
-                        .background(color = Surface),
+                        .background(color = Surface)
+                        .padding(horizontal = 16.dp, vertical = 8.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
 
                     GlideImage(
-                        modifier = Modifier.padding(end = 16.dp, top = 10.dp, bottom = 10.dp),
+                        modifier = Modifier.padding(end = 16.dp, top = 6.dp, bottom = 6.dp),
                         imageModel = {
                             viewModel.gamerData.userImg
                         },
                         success = {
                             Image(
                                 modifier = Modifier
-                                    .size(40.dp)
+                                    .size(60.dp)
                                     .clip(shape = RoundedCornerShape(160.dp)),
                                 bitmap = it.imageBitmap!!,
                                 contentDescription = "img",
@@ -103,8 +105,10 @@ fun SettingsScreen(
                         }
                     )
 
-                    Column(
-                        modifier = Modifier
+                    Row(
+                        modifier = Modifier,
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(6.dp)
                     ) {
                         Text(
                             text = viewModel.gamerData.firstName,
@@ -112,7 +116,6 @@ fun SettingsScreen(
                             lineHeight = 20.sp,
                             color = Color.Black
                         )
-                        Spacer(modifier = Modifier.width(10.dp))
                         Text(
                             text = viewModel.gamerData.lastName,
                             fontSize = 14.sp,
@@ -126,19 +129,62 @@ fun SettingsScreen(
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(top = 10.dp)
+                        .padding(horizontal = 16.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
                         text = stringResource(id = R.string.mode),
-                        fontSize = 14.sp,
+                        fontSize = 16.sp,
                         color = Color.Black
                     )
 
-                    BaseAppToggleButton(
-                        currentSelection = R.drawable.ic_security,
-                        toggleStates = listOf(R.drawable.ic_security, R.drawable.ic_settings),
-                        onToggleChange = {
+                    BaseToggleItem(
+                        item = ToggleComponentDvo(R.drawable.ic_day_img),
+                        state = false,
+                        onStateChanged = {}
+                    )
+                }
 
-                        }
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 10.dp)
+                        .padding(horizontal = 16.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = stringResource(id = R.string.languages),
+                        fontSize = 16.sp,
+                        color = Color.Black
+                    )
+
+                    BaseToggleItem(
+                        item = ToggleComponentDvo(R.drawable.ic_day_img),
+                        state = false,
+                        onStateChanged = {}
+                    )
+                }
+
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 10.dp)
+                        .padding(horizontal = 16.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = stringResource(id = R.string.sounds),
+                        fontSize = 16.sp,
+                        color = Color.Black
+                    )
+
+                    BaseToggleItem(
+                        item = ToggleComponentDvo(R.drawable.ic_day_img),
+                        state = false,
+                        onStateChanged = {}
                     )
                 }
             }

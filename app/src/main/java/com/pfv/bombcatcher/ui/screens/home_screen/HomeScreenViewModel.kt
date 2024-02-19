@@ -36,6 +36,9 @@ class HomeScreenViewModel @Inject constructor(): ViewModel() {
             HomeScreenEvent.OnPrivacyPolicyClick -> {
                 uiState = HomeScreenUiState.ShowPrivacyPolicyPopup
             }
+            HomeScreenEvent.OnCustomizationClick -> {
+                uiState = HomeScreenUiState.ShowCustomizationPopup
+            }
         }
     }
 

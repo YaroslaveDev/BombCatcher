@@ -11,6 +11,9 @@ import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -29,8 +32,15 @@ fun RectangleBaseBtn(
     color: Color = Secondary,
     modifier: Modifier = Modifier,
     size: Dp = 56.dp,
+    imgSize: Dp? = null,
     onClick: () -> Unit,
 ) {
+
+    val imgModifier by remember {
+        mutableStateOf(
+            if (imgSize == null) Modifier else Modifier.size(imgSize)
+        )
+    }
 
     Surface(
         modifier = Modifier
@@ -55,7 +65,7 @@ fun RectangleBaseBtn(
             contentAlignment = Alignment.Center
         ) {
             Image(
-                modifier = Modifier,
+                modifier = imgModifier,
                 painter = painterResource(id = icon),
                 contentDescription = "img",
                 colorFilter = ColorFilter.tint(Color.White)

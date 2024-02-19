@@ -10,6 +10,13 @@
     <string name="empty_lead_board">YOU\'RE THE FIRST</string>
     <string name="game_paused">GAME PAUSED</string>
     <string name="settings">SETTINGS</string>
+    <string name="customization">CUSTOMIZATION</string>
     <string name="mode">Mode</string>
     <string name="big">Big</string>
+    <string name="languages">Languages</string>
+    <string name="ua">UA</string>
+    <string name="en">EN</string>
+    <string name="sounds">Sounds</string>
+    <string name="change_bomb">Change bomb</string>
+    <string name="change_view">Change view</string>
 </resources>
